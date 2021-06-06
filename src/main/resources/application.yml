@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    active: database
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    password:
+    jedis:
+      pool:
+        max-active: 8
+        max-wait: 1ms
+        max-idle: 8
+        min-idle: 0
+    timeout: 5000ms
+
+server:
+  port: 8081
+mybatis:
+  type-aliases-package: com.bill.srms.entity
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
