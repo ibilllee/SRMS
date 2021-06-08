@@ -22,22 +22,22 @@ DROP TABLE IF EXISTS secretary;
 
 CREATE TABLE secretary
 (
-    id          INT PRIMARY KEY,
+    id          INT PRIMARY KEY AUTO_INCREMENT,
     NAME        TEXT                 NOT NULL,
     gender      ENUM ('man','woman') NOT NULL,
     age         INT,
-    employ_time DATE,
+    employ_time TEXT,
     duty        TEXT
 );
 
 CREATE TABLE research_studio
 (
-    id                 INT PRIMARY KEY,
+    id                 INT PRIMARY KEY AUTO_INCREMENT,
     NAME               TEXT NOT NULL,
     research_direction TEXT NOT NULL,
     principal_id       INT,
-    p_start_time       DATE,
-    p_term             DATE,
+    p_start_time       TEXT,
+    p_term             TEXT,
     secretary_id       INT,
 
     FOREIGN KEY (secretary_id) REFERENCES secretary (id)
@@ -46,7 +46,7 @@ CREATE TABLE research_studio
 
 CREATE TABLE room
 (
-    id        INT PRIMARY KEY,
+    id        INT PRIMARY KEY AUTO_INCREMENT,
     address   TEXT NOT NULL,
     acreage   FLOAT,
     studio_id INT,
@@ -56,21 +56,21 @@ CREATE TABLE room
 
 CREATE TABLE project
 (
-    id               INT PRIMARY KEY,
+    id               INT PRIMARY KEY AUTO_INCREMENT,
     principal_id     INT,
     NAME             TEXT NOT NULL,
     research_content TEXT,
     fund             DOUBLE,
-    start_time       DATE,
-    finish_time      DATE,
+    start_time       TEXT,
+    finish_time      TEXT,
     FOREIGN KEY (principal_id) REFERENCES research_studio (id)
         ON DELETE RESTRICT ON UPDATE RESTRICT
 );
 
 CREATE TABLE sub_topic
 (
-    id           INT PRIMARY KEY,
-    finish_time  DATE,
+    id           INT PRIMARY KEY AUTO_INCREMENT,
+    finish_time  TEXT,
     fund         DOUBLE,
     tech_index   TEXT,
     principal_id INT,
@@ -83,7 +83,7 @@ CREATE TABLE sub_topic
 
 CREATE TABLE researcher
 (
-    id                 INT PRIMARY KEY,
+    id                 INT PRIMARY KEY AUTO_INCREMENT,
     NAME               TEXT                 NOT NULL,
     gender             ENUM ('man','woman') NOT NULL,
     title              TEXT,
@@ -99,9 +99,9 @@ CREATE TABLE researcher
 
 CREATE TABLE achievement
 (
-    id          INT PRIMARY KEY,
+    id          INT PRIMARY KEY AUTO_INCREMENT,
     NAME        TEXT NOT NULL,
-    TIME        DATE,
+    TIME        TEXT,
     rankId      INT,
     TYPE        ENUM ('patent','paper','software_copyright'),
     patent_type ENUM ('invention','utility_model','exterior'),
@@ -112,14 +112,14 @@ CREATE TABLE achievement
 
 CREATE TABLE cooperator
 (
-    id      INT PRIMARY KEY,
+    id      INT PRIMARY KEY AUTO_INCREMENT,
     NAME    TEXT NOT NULL,
     address TEXT NOT NULL
 );
 
 CREATE TABLE person
 (
-    id           INT PRIMARY KEY,
+    id           INT PRIMARY KEY AUTO_INCREMENT,
     mail         TEXT NOT NULL,
     office_phone TEXT NOT NULL,
     mobile_phone TEXT NOT NULL
@@ -127,7 +127,7 @@ CREATE TABLE person
 
 CREATE TABLE contribute_to
 (
-    id             INT PRIMARY KEY,
+    id             INT PRIMARY KEY AUTO_INCREMENT,
     researcher_id  INT NOT NULL,
     achievement_id INT NOT NULL,
     FOREIGN KEY (researcher_id) REFERENCES researcher (id)
@@ -138,10 +138,10 @@ CREATE TABLE contribute_to
 
 CREATE TABLE join_project
 (
-    id            INT PRIMARY KEY,
+    id            INT PRIMARY KEY AUTO_INCREMENT,
     researcher_id INT NOT NULL,
     project_id    INT NOT NULL,
-    join_time     DATE,
+    join_time     TEXT,
     workload      TEXT,
     fund          DOUBLE,
     FOREIGN KEY (researcher_id) REFERENCES researcher (id)
@@ -152,7 +152,7 @@ CREATE TABLE join_project
 
 CREATE TABLE with_other
 (
-    id            INT PRIMARY KEY,
+    id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     project_id    INT NOT NULL,
     TYPE          ENUM ('commission','cooperation','supervision'),
@@ -164,7 +164,7 @@ CREATE TABLE with_other
 
 CREATE TABLE per_coo
 (
-    id            INT PRIMARY KEY,
+    id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     person_id     INT NOT NULL,
     TYPE          ENUM ('contact','principal'),
