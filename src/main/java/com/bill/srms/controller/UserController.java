@@ -21,11 +21,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/goHome")
-    public String index(@SessionAttribute("user") User user, Model model) {
-        model.addAttribute("name", user.getUsername());
-        return "redirect:../index.html";
-    }
+    // @GetMapping("/goHome")
+    // public String index(@SessionAttribute("user") User user, Model model) {
+    //     model.addAttribute("name", user.getUsername());
+    //     return "redirect:../index.html";
+    // }
 
 
     @PostMapping("/loginPost")
