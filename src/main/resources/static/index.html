@@ -6,6 +6,25 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <script src="js/jquery-3.3.1.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+
+            $("#login_btn").click(function () {
+                $.post("../user/login", $("#login_form").serialize(), function (data) {
+                    if (data.metaInfo.status==200) {
+                        alert("!");
+                        //location.href = "../userServlet/querySalaryInfoByPage";
+                    } else {
+                        // document.getElementById("CAPTCHA_img").src = "../CAPTCHA?" + new Date().getTime();
+                        // var err_msg_block = $("#err_msg_block");
+                        // err_msg_block.css("display", "block");
+                        // err_msg_block.html(data.errorMsg);
+                    }
+                });
+            })
+
+        })
+    </script>
 </head>
 <body>
     <div class="container" id="submitForm" style="width:400px">
