@@ -11,7 +11,7 @@
 
             $("#login_btn").click(function () {
                 $.post("../user/login", $("#login_form").serialize(), function (data) {
-                    if (data.metaInfo.status==200) {
+                    if (data.metaInfo.status==200) { //登陆成功
                         alert("!");
                         //location.href = "../userServlet/querySalaryInfoByPage";
                     } else {
