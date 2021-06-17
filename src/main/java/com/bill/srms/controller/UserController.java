@@ -24,14 +24,14 @@ public class UserController {
     @GetMapping("/goHome")
     public String index(@SessionAttribute("user") User user, Model model) {
         model.addAttribute("name", user.getUsername());
-        return "/index.html";
+        return "redirect:../index.html";
     }
 
 
     @PostMapping("/loginPost")
     @ResponseBody
     public  RespBean loginPost(User user, HttpSession session) {
-
+        System.out.println(System.getProperty("user.dir"));
             if(userService.login(user)){
                 session.setAttribute(WebSecurityConfig.SESSION_KEY,user);
                 return RespBean.ok("登陆成功");
@@ -43,7 +43,7 @@ public class UserController {
     public String logout(HttpSession session) {
         // 移除session
         session.removeAttribute(WebSecurityConfig.SESSION_KEY);
-        return "redirect:/index";
+        return "redirect:../index";
     }
 
 

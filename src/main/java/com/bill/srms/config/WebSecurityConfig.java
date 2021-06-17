@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter
 				return true;
 
 			// 跳转登录
-			String url = "/login.html";
+			String url = "/srms/login.html";
 			response.sendRedirect(url);
 			return false;
 		}
