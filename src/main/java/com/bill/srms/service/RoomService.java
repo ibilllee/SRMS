@@ -17,7 +17,8 @@ public class RoomService {
     }
 
     public List<Room> getAll(){
-        return roomMapper.selectAll();
+        List<Room> rooms = roomMapper.selectAll();
+        return rooms;
     }
 
     public boolean delete(Integer id){

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface RoomMapper extends Mapper<Room> {
     @Select(" SELECT R.id,address,acreage,studio_id,S.name AS studio_name " +
-            " FROM room R, research_studio S " +
-            " WHERE R.studio_id=S.id;")
+            " FROM room R LEFT JOIN research_studio S " +
+            " ON R.studio_id=S.id;")
     public List<Room> selectAll();
 }
