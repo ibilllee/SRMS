@@ -2,7 +2,8 @@ package com.bill.srms.controller;
 
 import com.bill.srms.pojo.RespBean;
 import com.bill.srms.pojo.Room;
-import com.bill.srms.service.RoomService;
+import com.bill.srms.pojo.Secretary;
+import com.bill.srms.service.SecretaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,31 +11,31 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/room")
-public class RoomController {
+@RequestMapping("/secretary")
+public class SecretaryController {
     @Autowired
-    private RoomService roomService;
+    private SecretaryService secretaryService;
 
     @PostMapping("/add")
-    public RespBean add(Room room) {
+    public RespBean add(Secretary secretary) {
         boolean result;
         try {
-            result = roomService.add(room);
+            result = secretaryService.add(secretary);
         } catch (Exception e) {
             return RespBean.unprocessable("添加失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("添加成功", room);
+            return RespBean.ok("添加成功", secretary);
         return RespBean.unprocessable("添加失败");
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
-        HashMap<String, List<Room>> result = new HashMap<>();
+    private RespBean getAll(){
+        HashMap<String, List<Secretary>> result = new HashMap<>();
         try {
-            result.put("roomList", roomService.getAll());
+            result.put("secretaryList", secretaryService.getAll());
         }catch (Exception e) {
-            return RespBean.unprocessable("获取失败" + e.getMessage());
+            return RespBean.unprocessable("添加失败" + e.getMessage());
         }
         return RespBean.ok("获取成功",result);
     }
@@ -43,7 +44,7 @@ public class RoomController {
     public RespBean delete(@PathVariable Integer id){
         boolean result;
         try {
-            result=roomService.delete(id);
+            result=secretaryService.delete(id);
         }catch (Exception e){
             return RespBean.unprocessable("删除失败"+e.getMessage());
         }
@@ -53,15 +54,15 @@ public class RoomController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Room room){
+    public RespBean update(Secretary secretary){
         boolean result;
         try {
-            result = roomService.update(room);
+            result = secretaryService.update(secretary);
         } catch (Exception e) {
             return RespBean.unprocessable("修改失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("修改成功", room);
+            return RespBean.ok("修改成功", secretary);
         return RespBean.unprocessable("修改失败");
     }
 }

@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS secretary;
 CREATE TABLE secretary
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    NAME        TEXT                 NOT NULL,
+    name        TEXT                 NOT NULL,
     gender      ENUM ('man','woman') NOT NULL,
     age         INT,
     employ_time TEXT,
@@ -33,7 +33,7 @@ CREATE TABLE secretary
 CREATE TABLE research_studio
 (
     id                 INT PRIMARY KEY AUTO_INCREMENT,
-    NAME               TEXT NOT NULL,
+    name               TEXT NOT NULL,
     research_direction TEXT NOT NULL,
     principal_id       INT,
     p_start_time       TEXT,
@@ -58,7 +58,7 @@ CREATE TABLE project
 (
     id               INT PRIMARY KEY AUTO_INCREMENT,
     principal_id     INT,
-    NAME             TEXT NOT NULL,
+    name             TEXT NOT NULL,
     research_content TEXT,
     fund             DOUBLE,
     start_time       TEXT,
@@ -84,7 +84,7 @@ CREATE TABLE sub_topic
 CREATE TABLE researcher
 (
     id                 INT PRIMARY KEY AUTO_INCREMENT,
-    NAME               TEXT                 NOT NULL,
+    name               TEXT                 NOT NULL,
     gender             ENUM ('man','woman') NOT NULL,
     title              TEXT,
     age                INT,
@@ -100,7 +100,7 @@ CREATE TABLE researcher
 CREATE TABLE achievement
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    NAME        TEXT NOT NULL,
+    name        TEXT NOT NULL,
     TIME        TEXT,
     rankId      INT,
     type        ENUM ('patent','paper','software_copyright'),
@@ -113,7 +113,7 @@ CREATE TABLE achievement
 CREATE TABLE cooperator
 (
     id      INT PRIMARY KEY AUTO_INCREMENT,
-    NAME    TEXT NOT NULL,
+    name    TEXT NOT NULL,
     address TEXT NOT NULL
 );
 
