@@ -173,3 +173,13 @@ CREATE TABLE per_coo
     FOREIGN KEY (person_id) REFERENCES person (id)
         ON DELETE RESTRICT ON UPDATE RESTRICT
 );
+
+CREATE TABLE user
+(
+    id            INT PRIMARY KEY AUTO_INCREMENT,
+    username 			VARCHAR(255) NOT NULL,
+    password 			TEXT NOT NULL
+);
+
+INSERT INTO user VALUES (NULL,'user','user');
+
