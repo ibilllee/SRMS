@@ -11,7 +11,11 @@ public class StudioService
 	@Autowired
 	private StudioMapper studioMapper;
 
-	public boolean addStudio(ResearchStudio studio){
+	public boolean add(ResearchStudio studio){
 		return studioMapper.insert(studio)==1;
+	}
+
+	public ResearchStudio getById(Integer id){
+		return studioMapper.selectByPrimaryKey(id);
 	}
 }

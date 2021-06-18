@@ -32,11 +32,11 @@ public class RoomController {
     public RespBean getAll(){
         HashMap<String, List<Room>> result = new HashMap<>();
         try {
-            result.put("data", roomService.getAll());
+            result.put("roomList", roomService.getAll());
         }catch (Exception e) {
             return RespBean.unprocessable("添加失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",roomService.getAll());
+        return RespBean.ok("获取成功",result);
     }
 
     @DeleteMapping("/delete/{id}")
