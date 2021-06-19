@@ -18,7 +18,7 @@ public class StudioService
 	}
 
 	public ResearchStudio getById(Integer id){
-		return studioMapper.selectByPrimaryKey(id);
+		return studioMapper.selectById(id);
 	}
 
 	public List<ResearchStudio> getAll(){

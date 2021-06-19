@@ -15,4 +15,7 @@ public interface StudioMapper extends Mapper<ResearchStudio>
             " LEFT JOIN researcher R " +
             " ON ST.principal_id = R.id;")
     List<ResearchStudio> selectAllWithSecretaryAndResearcher();
+
+    @Select(" SELECT * FROM research_studio WHERE id = #{id} ")
+    ResearchStudio selectById(Integer id);
 }
