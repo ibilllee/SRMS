@@ -19,15 +19,15 @@
                 var studioId = $(this).val();
                 $.get("studio/get/" + studioId, function (result) {
                     if (result.metaInfo.status === 200) {
-                        displayInfo($("#successFind1"),"您填入了: "+result.data.name);
+                        displayInfo($("#successFind1"), "您填入了: " + result.data.name);
                     } else if (result.metaInfo.msg === "该工作室不存在") {
-                        displayInfo($("#successFind1"),"该编号对应的工作室不存在");
+                        displayInfo($("#successFind1"), "该编号对应的工作室不存在");
                     } else {
-                        displayInfo($("#successFind1"),"验证工作室失败");
+                        displayInfo($("#successFind1"), "验证工作室失败");
                     }
                 })
             });
-            $("#closeModal").click(function (){
+            $("#closeModal").click(function () {
                 undisplay($("#successFind1"));
             })
 
@@ -41,7 +41,7 @@
                         "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
                         "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
                         "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
-                        "<td style='vertical-align:middle'>" + roomList[i].studioName +"</td>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].studioName + "</td>" +
                         "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'><span class='glyphicon glyphicon-info-sign'></span></a></td>" +
                         "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
                         "</tr>"
@@ -216,15 +216,20 @@
                             <label for="studioId">所属工作室编号：</label>
                             <input type="text" name="studioId" class="form-control" id="studioId"/>
                         </div>
-                        <div class="alert alert-info alert-dismissible" id="successFind1" role="alert" style="display: none"></div>
+                        <div class="alert alert-info alert-dismissible" id="successFind1" role="alert"
+                             style="display: none"></div>
                         <div class="form-group" style="text-align: center;">
-                            <input class="btn btn btn-primary" type="button" value="提交" id="submitBtn">
+                            <div class="btn btn btn-primary" type="button" id="submitBtn">
+                                <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;提交
+                            </div>
                         </div>
                     </form>
                 </center>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" id="closeModal" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
             </div>
         </div>
     </div>

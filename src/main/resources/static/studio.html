@@ -19,30 +19,30 @@
                 var principalId = $(this).val();
                 $.get("researcher/get/" + principalId, function (result) {
                     if (result.metaInfo.status === 200) {
-                        displayInfo($("#successFind1"),"您填入了: "+result.data.name);
+                        displayInfo($("#successFind1"), "您填入了: " + result.data.name);
                     } else if (result.metaInfo.msg === "该科研者不存在") {
-                        displayInfo($("#successFind1"),"该编号对应的科研负责人不存在");
+                        displayInfo($("#successFind1"), "该编号对应的科研负责人不存在");
                     } else {
-                        displayInfo($("#successFind1"),"验证负责人失败");
+                        displayInfo($("#successFind1"), "验证负责人失败");
                     }
                 })
             });
-            $("#closeModal").click(function (){
+            $("#closeModal").click(function () {
                 undisplay($("#successFind1"));
             })
             $("#secretaryId").blur(function () {
                 var secretaryId = $(this).val();
                 $.get("secretary/get/" + secretaryId, function (result) {
                     if (result.metaInfo.status === 200) {
-                        displayInfo($("#successFind2"),"您填入了: "+result.data.name);
+                        displayInfo($("#successFind2"), "您填入了: " + result.data.name);
                     } else if (result.metaInfo.msg === "该秘书不存在") {
-                        displayInfo($("#successFind2"),"该编号对应的秘书不存在");
+                        displayInfo($("#successFind2"), "该编号对应的秘书不存在");
                     } else {
-                        displayInfo($("#successFind2"),"验证负责人失败");
+                        displayInfo($("#successFind2"), "验证负责人失败");
                     }
                 })
             });
-            $("#closeModal").click(function (){
+            $("#closeModal").click(function () {
                 undisplay($("#successFind2"));
             })
 
@@ -57,10 +57,10 @@
                         "<td style='vertical-align:middle'>" + studioList[i].researchDirection + "</td>" +
                         "<td style='vertical-align:middle;display: none'>" + studioList[i].principalId + "</td>" +
                         "<td style='vertical-align:middle'>" + studioList[i].principalName + "</td>" +
-                        "<td style='vertical-align:middle'>" + studioList[i].pstartTime +"</td>" +
-                        "<td style='vertical-align:middle'>" + studioList[i].pterm +"</td>" +
-                        "<td style='vertical-align:middle;display: none'>" + studioList[i].secretaryId +"</td>" +
-                        "<td style='vertical-align:middle'>" + studioList[i].secretaryName +"</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].pstartTime + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].pterm + "</td>" +
+                        "<td style='vertical-align:middle;display: none'>" + studioList[i].secretaryId + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].secretaryName + "</td>" +
                         "<td style='vertical-align:middle'><a class='btn btn-sm btn-default mbr' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
                         "<td style='vertical-align:middle'><a class='btn btn-sm btn-default loc' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
                         "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-info-sign'></span></a></td>" +
@@ -96,7 +96,7 @@
                 });
 
                 // 查询成员
-                $("a.mbr").click(function (){
+                $("a.mbr").click(function () {
                     var id = $(this).attr("name");
                     $("#table2").html("<tr class='success' style='height:30px'>\n" +
                         "<th style='vertical-align:middle;'>编号</th>\n" +
@@ -111,7 +111,7 @@
                         "</tr>");
 
                     $("#myModal2").modal("show");
-                    $.get("researcher/getByStudioId/"+id, function (result) {
+                    $.get("researcher/getByStudioId/" + id, function (result) {
                         var researcherList = result.data.researcherList;
                         for (i = 0; i < researcherList.length; i++) {
                             $("#table2").append(
@@ -132,7 +132,7 @@
                 })
 
                 // 查询地点
-                $("a.loc").click(function (){
+                $("a.loc").click(function () {
                     var id = $(this).attr("name");
                     $("#table2").html("<tr class='success' style='height:30px'>\n" +
                         "<th style='vertical-align:middle'>编号</th>" +
@@ -152,7 +152,7 @@
                                 "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
                                 "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
                                 "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
-                                "<td style='vertical-align:middle'>" + roomList[i].studioName +"</td>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].studioName + "</td>" +
                                 "</tr>"
                             )
                         }
@@ -283,7 +283,7 @@
 
 <!--模态框1-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true" >
+     aria-hidden="true">
     <div class="modal-dialog" id="myModalDialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -309,13 +309,15 @@
                             <label for="secretaryId">秘书编号</label>
                             <input type="text" name="secretaryId" class="form-control" id="secretaryId"/>
                         </div>
-                        <div class="alert alert-info alert-dismissible" id="successFind2" role="alert" style="display: none"></div>
+                        <div class="alert alert-info alert-dismissible" id="successFind2" role="alert"
+                             style="display: none"></div>
 
                         <div class="form-group">
                             <label for="principalId">负责人编号</label>
                             <input type="text" name="principalId" class="form-control" id="principalId"/>
                         </div>
-                        <div class="alert alert-info alert-dismissible" id="successFind1" role="alert" style="display: none"></div>
+                        <div class="alert alert-info alert-dismissible" id="successFind1" role="alert"
+                             style="display: none"></div>
                         <div class="form-group">
                             <label for="pStartTime">负责起始期</label>
                             <input type="text" name="pStartTime" class="form-control" id="pStartTime"/>
@@ -326,7 +328,9 @@
                         </div>
 
                         <div class="form-group" style="text-align: center;">
-                            <input class="btn btn btn-primary" type="button" value="提交" id="submitBtn">
+                            <div class="btn btn btn-primary" type="button" id="submitBtn">
+                                <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;提交
+                            </div>
                         </div>
                     </form>
                 </center>
