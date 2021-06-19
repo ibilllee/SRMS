@@ -29,4 +29,7 @@ public class SecretaryService {
     }
 
 
+    public Secretary getById(Integer id) {
+        return secretaryMapper.selectById(id);
+    }
 }

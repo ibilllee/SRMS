@@ -21,7 +21,7 @@
                     if (result.metaInfo.status === 200) {
                         displayInfo($("#successFind1"),"您填入了: "+result.data.name);
                     } else if (result.metaInfo.msg === "该工作室不存在") {
-                        displayInfo($("#successFind1"),"该工作室ID对应的工作室不存在");
+                        displayInfo($("#successFind1"),"该编号对应的工作室不存在");
                     } else {
                         displayInfo($("#successFind1"),"验证工作室失败");
                     }
@@ -35,7 +35,7 @@
             $.get("room/getAll", function (result) {
                 var roomList = result.data.roomList;
                 for (i = 0; i < roomList.length; i++) {
-                    $("table").append(
+                    $("#table").append(
                         "<tr class='col' name='" + roomList[i].id + "'>" +
                         "<td style='vertical-align:middle'>" + roomList[i].id + "</td>" +
                         "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +

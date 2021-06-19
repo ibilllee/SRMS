@@ -1,9 +1,11 @@
 package com.bill.srms.controller;
 
+import com.bill.srms.pojo.Researcher;
 import com.bill.srms.pojo.RespBean;
 import com.bill.srms.pojo.Room;
 import com.bill.srms.pojo.Secretary;
 import com.bill.srms.service.SecretaryService;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +29,19 @@ public class SecretaryController {
         if (result)
             return RespBean.ok("添加成功", secretary);
         return RespBean.unprocessable("添加失败");
+    }
+
+    @GetMapping("/get/{id}")
+    public RespBean get(@PathVariable Integer id){
+        Secretary secretary;
+        try {
+            secretary=secretaryService.getById(id);
+        }catch (Exception e){
+            return RespBean.unprocessable("获取失败");
+        }
+        if (secretary!=null)
+            return RespBean.ok("获取成果",secretary);
+        return RespBean.unprocessable("该秘书不存在");
     }
 
     @GetMapping("/getAll")

@@ -17,7 +17,7 @@ public class ResearcherService {
     }
 
     public List<Researcher> getAll(){
-        return researcherMapper.selectAll();
+        return researcherMapper.selectAllWithStudio();
     }
 
     public boolean delete(Integer id){
@@ -26,5 +26,13 @@ public class ResearcherService {
 
     public boolean update(Researcher researcher){
         return researcherMapper.updateByPrimaryKeySelective(researcher)==1;
+    }
+
+    public List<Researcher> getByStudioId(Integer studioId) {
+        return researcherMapper.selectByStudioId(studioId);
+    }
+
+    public Researcher getById(Integer id) {
+        return researcherMapper.selectById(id);
     }
 }

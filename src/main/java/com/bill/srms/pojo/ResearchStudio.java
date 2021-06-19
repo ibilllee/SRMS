@@ -17,7 +17,9 @@ public class ResearchStudio
 	private String name;
 	private String researchDirection;
 	private Integer principalId;
+	private String principalName;
 	private String pStartTime;
 	private String pTerm;
 	private Integer secretaryId;
+	private String secretaryName;
 }

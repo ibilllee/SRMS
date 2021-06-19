@@ -39,6 +39,17 @@ public class RoomController {
         return RespBean.ok("获取成功",result);
     }
 
+    @GetMapping("/getByStudioId/{studioId}")
+    public RespBean getByStudioId(@PathVariable Integer studioId){
+        HashMap<String, List<Room>> result = new HashMap<>();
+        try {
+            result.put("roomList", roomService.getByStudioId(studioId));
+        }catch (Exception e) {
+            return RespBean.unprocessable("获取失败" + e.getMessage());
+        }
+        return RespBean.ok("获取成功",result);
+    }
+
     @DeleteMapping("/delete/{id}")
     public RespBean delete(@PathVariable Integer id){
         boolean result;

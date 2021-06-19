@@ -10,5 +10,11 @@ public interface RoomMapper extends Mapper<Room> {
     @Select(" SELECT R.*,S.name AS studio_name " +
             " FROM room R LEFT JOIN research_studio S " +
             " ON R.studio_id=S.id;")
-    List<Room> selectAll();
+    List<Room> selectAllWithStudio();
+
+    @Select(" SELECT R.*,S.name AS studio_name " +
+            " FROM room R LEFT JOIN research_studio S " +
+            " ON R.studio_id=S.id " +
+            " WHERE S.id = #{studioId}; ")
+    List<Room> selectByStudioId(Integer studioId);
 }

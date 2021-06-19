@@ -22,7 +22,7 @@
                     if (result.metaInfo.status === 200) {
                         displayInfo($("#successFind1"), "您填入了: " + result.data.name);
                     } else if (result.metaInfo.msg === "该工作室不存在") {
-                        displayInfo($("#successFind1"), "该工作室ID对应的工作室不存在");
+                        displayInfo($("#successFind1"), "该编号对应的工作室不存在");
                     } else {
                         displayInfo($("#successFind1"), "验证工作室失败");
                     }
@@ -37,7 +37,7 @@
                 var researcherList = result.data.researcherList;
 
                 for (i = 0; i < researcherList.length; i++) {
-                    $("table").append(
+                    $("#table").append(
                         "<tr class='col' name='" + researcherList[i].id + "'>" +
                         "<td style='vertical-align:middle'>" + researcherList[i].id + "</td>" +
                         "<td style='vertical-align:middle'>" + researcherList[i].name + "</td>" +
@@ -194,7 +194,6 @@
                     <th style='vertical-align:middle'>更新</th>
                     <th style='vertical-align:middle'>删除</th>
                 </tr>
-
             </table>
         </div>
 

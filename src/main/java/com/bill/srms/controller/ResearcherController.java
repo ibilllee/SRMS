@@ -1,5 +1,6 @@
 package com.bill.srms.controller;
 
+import com.bill.srms.pojo.ResearchStudio;
 import com.bill.srms.pojo.Researcher;
 import com.bill.srms.pojo.RespBean;
 import com.bill.srms.service.ResearcherService;
@@ -28,11 +29,35 @@ public class ResearcherController {
         return RespBean.unprocessable("添加失败");
     }
 
+    @GetMapping("/get/{id}")
+    public RespBean get(@PathVariable Integer id){
+        Researcher researcher;
+        try {
+            researcher=researcherService.getById(id);
+        }catch (Exception e){
+            return RespBean.unprocessable("获取失败");
+        }
+        if (researcher!=null)
+            return RespBean.ok("获取成果",researcher);
+        return RespBean.unprocessable("该科研者不存在");
+    }
+
     @GetMapping("/getAll")
     private RespBean getAll(){
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getAll());
+        }catch (Exception e) {
+            return RespBean.unprocessable("获取失败" + e.getMessage());
+        }
+        return RespBean.ok("获取成功",result);
+    }
+
+    @GetMapping("/getByStudioId/{studioId}")
+    private RespBean getByStudioId(@PathVariable Integer studioId){
+        HashMap<String, List<Researcher>> result = new HashMap<>();
+        try {
+            result.put("researcherList", researcherService.getByStudioId(studioId));
         }catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }

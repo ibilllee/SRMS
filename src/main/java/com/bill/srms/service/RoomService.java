@@ -17,8 +17,7 @@ public class RoomService {
     }
 
     public List<Room> getAll(){
-        List<Room> rooms = roomMapper.selectAll();
-        return rooms;
+        return roomMapper.selectAllWithStudio();
     }
 
     public boolean delete(Integer id){
@@ -29,4 +28,7 @@ public class RoomService {
         return roomMapper.updateByPrimaryKeySelective(room)==1;
     }
 
+    public List<Room> getByStudioId(Integer studioId) {
+        return roomMapper.selectByStudioId(studioId);
+    }
 }
