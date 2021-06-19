@@ -24,7 +24,7 @@ CREATE TABLE secretary
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     name        TEXT                 NOT NULL,
-    gender      ENUM ('man','woman') NOT NULL,
+    gender      ENUM ('男','女') NOT NULL,
     age         INT,
     employ_time TEXT,
     duty        TEXT
@@ -85,12 +85,11 @@ CREATE TABLE researcher
 (
     id                 INT PRIMARY KEY AUTO_INCREMENT,
     name               TEXT                 NOT NULL,
-    gender             ENUM ('man','woman') NOT NULL,
+    gender             ENUM ('男','女') NOT NULL,
     title              TEXT,
     age                INT,
     research_direction TEXT,
-    studio_id          INT,
-    sub_topic_id       INT
+    studio_id          INT
 #     FOREIGN KEY (studio_id) REFERENCES research_studio (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT,
 #     FOREIGN KEY (sub_topic_id) REFERENCES sub_topic (id)
@@ -141,6 +140,7 @@ CREATE TABLE join_project
     id            INT PRIMARY KEY AUTO_INCREMENT,
     researcher_id INT NOT NULL,
     project_id    INT NOT NULL,
+    sub_topic_id  INT NOT NULL,
     join_time     TEXT,
     workload      TEXT,
     fund          DOUBLE
@@ -182,13 +182,30 @@ CREATE TABLE user
 );
 
 INSERT INTO user VALUES (NULL,'user','user');
-INSERT INTO secretary VALUES (NULL,'陶乾秘书','woman',30,'2020-1-1','normal');
-INSERT INTO secretary VALUES (NULL,'高松秘书','woman',40,'2020-1-1','normal');
-INSERT INTO research_studio VALUES (NULL,'陶乾工作室','AI',NULL,'2020-1-1','1year',1);
-INSERT INTO research_studio VALUES (NULL,'高松工作室','C',NULL,'2020-1-1','1year',2);
+INSERT INTO secretary VALUES (NULL,'郭德纲','男',50,'2020-1-1','基础工作');
+INSERT INTO secretary VALUES (NULL,'于谦','男',50,'2020-1-1','基础工作');
+INSERT INTO research_studio VALUES (NULL,'数据科学与智能软件','机器学习',1,'2020-1-1','5年',1);
+INSERT INTO research_studio VALUES (NULL,'软件构建理论与方法','新型软件体系结构',6,'2020-1-1','5年',2);
+INSERT INTO research_studio VALUES (NULL,'大数据系统与云计算','新型云计算平台与云服务',13,'2020-1-1','6年',2);
 INSERT INTO room VALUES (NULL,'B7-111','100.5',1);
-INSERT INTO room VALUES (NULL,'B7-112','12.5',1);
+INSERT INTO room VALUES (NULL,'B7-112','125.5',1);
 INSERT INTO room VALUES (NULL,'B7-113','200.5',2);
-INSERT INTO researcher VALUES (NULL,'陶乾','man','副院长',40,'AI',1,NULL);
-INSERT INTO researcher VALUES (NULL,'陶乾乾','man','副院长',30,'AI',1,NULL);
-INSERT INTO researcher VALUES (NULL,'高松','man','校长',55,'C',2,NULL);
+INSERT INTO room VALUES (NULL,'B7-114','150.5',3);
+
+INSERT INTO researcher VALUES (NULL,'杨晓伟','男','副院长',50,'机器学习',1);
+INSERT INTO researcher VALUES (NULL,'黄翰'  ,'男','教授',40,'数据挖掘',1);
+INSERT INTO researcher VALUES (NULL,'刘艳霞','女','副教授',40,'数据挖掘',1);
+INSERT INTO researcher VALUES (NULL,'吴秋霞','女','副研究员',40,'机器学习',1);
+INSERT INTO researcher VALUES (NULL,'程兴国','男','讲师',40,'数据挖掘',1);
+
+INSERT INTO researcher VALUES (NULL,'张平健','男','教授',40,'软件体系结构',2);
+INSERT INTO researcher VALUES (NULL,'奚建清','男','教授',40,'软件体系结构',2);
+INSERT INTO researcher VALUES (NULL,'黄敏'  ,'女','副教授',40,'信息处理与服务',2);
+INSERT INTO researcher VALUES (NULL,'陈虎'  ,'男','副教授',40,'信息处理与服务',2);
+INSERT INTO researcher VALUES (NULL,'汤德佑','男','副教授',40,'群体智能',2);
+INSERT INTO researcher VALUES (NULL,'林连南','男','讲师',30,'群体智能',2);
+INSERT INTO researcher VALUES (NULL,'陈春华','男','讲师',30,'高效能计算',2);
+
+INSERT INTO researcher VALUES (NULL,'李东','男','教授',40,'数据库系统',3);
+INSERT INTO researcher VALUES (NULL,'徐杨','男','讲师',40,'分布式系统',3);
+INSERT INTO researcher VALUES (NULL,'何月涵','女','助理',40,'扫地',3);

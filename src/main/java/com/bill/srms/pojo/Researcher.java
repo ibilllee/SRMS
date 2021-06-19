@@ -20,5 +20,4 @@ public class Researcher {
     private String researchDirection;
     private Integer studioId;
     private String studioName;
-    private Integer subTopicId;
 }
