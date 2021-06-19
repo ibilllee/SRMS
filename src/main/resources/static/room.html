@@ -35,11 +35,6 @@
             $.get("room/getAll", function (result) {
                 var roomList = result.data.roomList;
                 for (i = 0; i < roomList.length; i++) {
-                    // $("table").append("<tr class='col' name='" + roomList[i].id + "'><td style='vertical-align:middle'>" + roomList[i].id + "</td><td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
-                    //     "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td><td style='vertical-align:middle'>" + roomList[i].studioId + "</td><td style='vertical-align:middle'>" + roomList[i].studioName +
-                    //     "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'>更新</a>" +
-                    //     "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'>删除</a>" +
-                    //     "</td></tr>")
                     $("table").append(
                         "<tr class='col' name='" + roomList[i].id + "'>" +
                         "<td style='vertical-align:middle'>" + roomList[i].id + "</td>" +
@@ -47,8 +42,8 @@
                         "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
                         "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
                         "<td style='vertical-align:middle'>" + roomList[i].studioName +"</td>" +
-                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'>更新</a></td>" +
-                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'>删除</a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'><span class='glyphicon glyphicon-info-sign'></span></a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
                         "</tr>"
                     )
                 }
@@ -157,9 +152,9 @@
     <h3 style="text-align:center">办公地点列表</h3>
     <div class="row">
 
-        <div class="hidden-xs col-sm-1  col-lg-2"></div>
+        <div class="hidden-xs col-sm-2  col-lg-2"></div>
 
-        <div class="col-xs-12 col-sm-10 col-lg-8">
+        <div class="col-xs-12 col-sm-8 col-lg-8">
             <table border="1" class="table table-bordered table-hover"
                    style="text-align: center;" id="table">
                 <tr class="success">
@@ -186,7 +181,8 @@
 
         <div class="col-xs-12">
             <center>
-                <input class="btn btn btn-info" type="button" value="添加办公地点" id="addBtn">
+                <a class="btn btn btn-info" type="button" id="addBtn">
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加办公地点</a>
             </center>
         </div>
     </div>
