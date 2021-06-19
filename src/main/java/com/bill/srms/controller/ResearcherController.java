@@ -1,9 +1,8 @@
 package com.bill.srms.controller;
 
+import com.bill.srms.pojo.Researcher;
 import com.bill.srms.pojo.RespBean;
-import com.bill.srms.pojo.Room;
-import com.bill.srms.pojo.Secretary;
-import com.bill.srms.service.SecretaryService;
+import com.bill.srms.service.ResearcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,29 +10,29 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/secretary")
-public class SecretaryController {
+@RequestMapping("/researcher")
+public class ResearcherController {
     @Autowired
-    private SecretaryService secretaryService;
+    private ResearcherService researcherService;
 
     @PostMapping("/add")
-    public RespBean add(Secretary secretary) {
+    public RespBean add(Researcher researcher) {
         boolean result;
         try {
-            result = secretaryService.add(secretary);
+            result = researcherService.add(researcher);
         } catch (Exception e) {
             return RespBean.unprocessable("添加失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("添加成功", secretary);
+            return RespBean.ok("添加成功", researcher);
         return RespBean.unprocessable("添加失败");
     }
 
     @GetMapping("/getAll")
     private RespBean getAll(){
-        HashMap<String, List<Secretary>> result = new HashMap<>();
+        HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
-            result.put("secretaryList", secretaryService.getAll());
+            result.put("researcherList", researcherService.getAll());
         }catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
@@ -44,7 +43,7 @@ public class SecretaryController {
     public RespBean delete(@PathVariable Integer id){
         boolean result;
         try {
-            result=secretaryService.delete(id);
+            result= researcherService.delete(id);
         }catch (Exception e){
             return RespBean.unprocessable("删除失败"+e.getMessage());
         }
@@ -54,15 +53,15 @@ public class SecretaryController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Secretary secretary){
+    public RespBean update(Researcher researcher){
         boolean result;
         try {
-            result = secretaryService.update(secretary);
+            result = researcherService.update(researcher);
         } catch (Exception e) {
             return RespBean.unprocessable("修改失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("修改成功", secretary);
+            return RespBean.ok("修改成功", researcher);
         return RespBean.unprocessable("修改失败");
     }
 }

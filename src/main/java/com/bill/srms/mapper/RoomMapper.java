@@ -7,8 +7,8 @@ import tk.mybatis.mapper.common.Mapper;
 import java.util.List;
 
 public interface RoomMapper extends Mapper<Room> {
-    @Select(" SELECT R.id,address,acreage,studio_id,S.name AS studio_name " +
+    @Select(" SELECT R.*,S.name AS studio_name " +
             " FROM room R LEFT JOIN research_studio S " +
             " ON R.studio_id=S.id;")
-    public List<Room> selectAll();
+    List<Room> selectAll();
 }

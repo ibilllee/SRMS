@@ -189,3 +189,6 @@ INSERT INTO research_studio VALUES (NULL,'高松工作室','C',NULL,'2020-1-1','
 INSERT INTO room VALUES (NULL,'B7-111','100.5',1);
 INSERT INTO room VALUES (NULL,'B7-112','12.5',1);
 INSERT INTO room VALUES (NULL,'B7-113','200.5',2);
+INSERT INTO researcher VALUES (NULL,'陶乾','man','副院长',40,'AI',1,NULL);
+INSERT INTO researcher VALUES (NULL,'陶乾乾','man','副院长',30,'AI',1,NULL);
+INSERT INTO researcher VALUES (NULL,'高松','man','校长',55,'C',2,NULL);
