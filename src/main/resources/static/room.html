@@ -30,11 +30,22 @@
             $.get("room/getAll", function (result) {
                 var roomList = result.data.roomList;
                 for (i = 0; i < roomList.length; i++) {
-                    $("table").append("<tr class='col' name='" + roomList[i].id + "'><td style='vertical-align:middle'>" + roomList[i].id + "</td><td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
-                        "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td><td style='vertical-align:middle'>" + roomList[i].studioId + "</td><td style='vertical-align:middle'>" + roomList[i].studioName +
-                        "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'>更新</a>" +
-                        "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'>删除</a>" +
-                        "</td></tr>")
+                    // $("table").append("<tr class='col' name='" + roomList[i].id + "'><td style='vertical-align:middle'>" + roomList[i].id + "</td><td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
+                    //     "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td><td style='vertical-align:middle'>" + roomList[i].studioId + "</td><td style='vertical-align:middle'>" + roomList[i].studioName +
+                    //     "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'>更新</a>" +
+                    //     "</td><td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'>删除</a>" +
+                    //     "</td></tr>")
+                    $("table").append(
+                        "<tr class='col' name='" + roomList[i].id + "'>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].id + "</td>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
+                        "<td style='vertical-align:middle'>" + roomList[i].studioName +"</td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + roomList[i].id + "'>更新</a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + roomList[i].id + "'>删除</a></td>" +
+                        "</tr>"
+                    )
                 }
 
                 //新增
@@ -183,7 +194,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑工作室</h4>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑工作地点</h4>
             </div>
             <div class="modal-body" id="windowContent">
                 <center>
