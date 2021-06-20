@@ -30,4 +30,15 @@ public interface ResearcherMapper extends Mapper<Researcher> {
             "     FROM join_project " +
             "     WHERE project_id = #{projectId});")
     List<Researcher> selectByProjectId(Integer projectId);
+
+
+    @Select(" SELECT R.*, S.name as studio_name " +
+            " FROM researcher R " +
+            " LEFT JOIN research_studio S " +
+            " ON R.studio_id = S.id " +
+            " WHERE R.id IN ( " +
+            "     SELECT researcher_id " +
+            "     FROM join_project " +
+            "     WHERE sub_topic_id = #{subTopicId});")
+    List<Researcher> selectBySubTopic(Integer subTopicId);
 }

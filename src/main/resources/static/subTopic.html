@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>科研项目管理</title>
+        <title>子课题管理</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <script src="js/jquery-3.3.1.js"></script>
         <script src="js/bootstrap.min.js"></script>
@@ -31,25 +31,39 @@
                     undisplay($("#successFind1"));
                 })
 
+                $("#projectId").blur(function () {
+                    var projectId = $(this).val();
+                    $.get("project/get/" + projectId, function (result) {
+                        if (result.metaInfo.status === 200) {
+                            displayInfo($("#successFind2"), "您填入了: " + result.data.name);
+                        } else if (result.metaInfo.msg === "该秘书不存在") {
+                            displayInfo($("#successFind2"), "该编号对应的秘书不存在");
+                        } else {
+                            displayInfo($("#successFind2"), "验证负责人失败");
+                        }
+                    })
+                });
+                $("#closeModal").click(function () {
+                    undisplay($("#successFind2"));
+                })
 
                 //获取结果列表
-                $.get("project/getAll", function (result) {
-                    var projectList = result.data.projectList;
-                    for (i = 0; i < projectList.length; i++) {
+                $.get("subTopic/getAll", function (result) {
+                    var subTopicList = result.data.subTopicList;
+                    for (i = 0; i < subTopicList.length; i++) {
                         $("#table").append(
-                            "<tr class='col' name='" + projectList[i].id + "'>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].id + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].name + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].principalId + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].principalName + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].researchContent+ "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].fund + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].startTime + "</td>" +
-                            "<td style='vertical-align:middle'>" + projectList[i].finishTime + "</td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default mbr' name='" + projectList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default sub' name='" + projectList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + projectList[i].id + "'><span class='glyphicon glyphicon-info-sign'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + projectList[i].id + "'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
+                            "<tr class='col' name='" + subTopicList[i].id + "'>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].id + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].finishTime + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].fund + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].techIndex + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].principalId + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].principalName + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].projectId + "</td>" +
+                            "<td style='vertical-align:middle'>" + subTopicList[i].projectName + "</td>" +
+                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default mbr' name='" + subTopicList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
+                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + subTopicList[i].id + "'><span class='glyphicon glyphicon-info-sign'></span></a></td>" +
+                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + subTopicList[i].id + "'><span class='glyphicon glyphicon-minus-sign'></span></a></td>" +
                             "</tr>"
                         )
                     }
@@ -58,29 +72,28 @@
                     $("#addBtn").click(function () {
                         $("#myModal").modal("show");
                         $("#id").attr("placeholder", "自动生成");
-                        $("#name").attr("value", "");
-                        $("#principalId").attr("value", "");
-                        $("#researchContent").attr("value", "");
-                        $("#fund").attr("value", "");
-                        $("#startTime").attr("value", "");
                         $("#finishTime").attr("value", "");
+                        $("#fund").attr("value", "");
+                        $("#techIndex").attr("value", "");
+                        $("#principalId").attr("value", "");
+                        $("#projectId").attr("value", "");
 
                         $("#submitBtn").click(function () {
-                            if (confirm("新增科研项目？")) {
-                                $.post("project/add", $("#changeForm").serialize(), function (result) {
+                            if (confirm("新增子课题？")) {
+                                $.post("subTopic/add", $("#changeForm").serialize(), function (result) {
                                     if (result.metaInfo.status === 200) {
                                         alert("添加成功");
-                                        location.href = "project.html";
+                                        location.href = "subTopic.html";
                                     } else {
                                         alert("添加失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "project.html";
+                                        location.href = "subTopic.html";
                                     }
                                 });
                             }
                         });
                     });
 
-                    //查询成员
+                   // 查询成员
                     $("a.mbr").click(function () {
                         var id = $(this).attr("name");
                         $("#table2").html("<tr class='success' style='height:30px'>\n" +
@@ -95,7 +108,7 @@
                             "</tr>");
 
                         $("#myModal2").modal("show");
-                        $.get("researcher/getByProjectId/" + id, function (result) {
+                        $.get("researcher/getBySubTopicId/" + id, function (result) {
                             var researcherList = result.data.researcherList;
                             for (i = 0; i < researcherList.length; i++) {
                                 $("#table2").append(
@@ -114,35 +127,6 @@
                         })
                     })
 
-                    // 查询子课题
-                    $("a.sub").click(function () {
-                        var id = $(this).attr("name");
-                        $("#table2").html("<tr class='success' style='height:30px'>\n" +
-                            "<th style='vertical-align:middle'>编号</th>" +
-                            "<th style='vertical-align:middle'>完成时间</th>" +
-                            "<th style='vertical-align:middle'>经费</th>" +
-                            "<th style='vertical-align:middle'>技术指标</th>" +
-                            "<th style='vertical-align:middle'>负责人编号</th>" +
-                            "<th style='vertical-align:middle'>负责人</th>" +
-                            "</tr>");
-
-                        $("#myModal2").modal("show");
-                        $.get("subTopic/getByProjectId/" + id, function (result) {
-                            var subTopicList = result.data.subTopicList;
-                            for (i = 0; i < subTopicList.length; i++) {
-                                $("#table2").append(
-                                    "<tr class='col' style='height:30px' name='" + subTopicList[i].id + "'>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].id + "</td>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].finishTime + "</td>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].fund + "</td>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].techIndex + "</td>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].principalId + "</td>" +
-                                    "<td style='vertical-align:middle'>" + subTopicList[i].principalName + "</td>" +
-                                    "</tr>"
-                                )
-                            }
-                        });
-                    })
 
                     //修改
                     $("a.upd").click(function () {
@@ -150,42 +134,40 @@
 
                         //查询表格，属性回填
                         var father = $("[name='" + id + "']");
-                        var name = father.children().eq(1).html();
-                        var principalId = father.children().eq(2).html();
-                        var researchContent = father.children().eq(4).html();
-                        var fund = father.children().eq(5).html();
-                        var startTime = father.children().eq(6).html();
-                        var finishTime = father.children().eq(7).html();
+                        var finishTime = father.children().eq(1).html();
+                        var fund = father.children().eq(2).html();
+                        var techIndex = father.children().eq(3).html();
+                        var principalId = father.children().eq(4).html();
+                        var projectId = father.children().eq(6).html();
 
                         $("#id").attr("placeholder", id);
-                        $("#name").attr("value", name);
-                        $("#principalId").attr("value", principalId);
-                        $("#researchContent").attr("value", researchContent);
-                        $("#fund").attr("value", fund);
-                        $("#startTime").attr("value", startTime);
                         $("#finishTime").attr("value", finishTime);
+                        $("#fund").attr("value", fund);
+                        $("#techIndex").attr("value", techIndex);
+                        $("#principalId").attr("value", principalId);
+                        $("#projectId").attr("value", projectId);
 
                         $("#myModal").modal("show");
                         $("#submitBtn").click(function () {
-                            if (confirm("修改编号为" + id + "的科研项目？")) {
+                            if (confirm("修改编号为" + id + "的子课题信息？")) {
                                 $("#id").removeAttr("disabled");
                                 $("#id").attr("value", id);
                                 $.ajax({
                                     type: 'PUT',
-                                    url: 'project/update',
+                                    url: 'subTopic/update',
                                     data: $("#changeForm").serialize(),
                                     success: function (result) {
                                         if (result.metaInfo.status === 200) {
                                             alert("修改成功");
-                                            location.href = "project.html";
+                                            location.href = "subTopic.html";
                                         } else {
                                             alert("修改失败\n信息：" + result.metaInfo.msg);
-                                            location.href = "project.html";
+                                            location.href = "subTopic.html";
                                         }
                                     },
                                     error: function (result) {
                                         alert("修改失败");
-                                        location.href = "project.html";
+                                        location.href = "subTopic.html";
                                     }
                                 })
                             }
@@ -196,22 +178,22 @@
                     //删除
                     $("a.del").click(function () {
                         var id = $(this).attr("name");
-                        if (confirm("删除编号为" + id + "的科研项目？")) {
+                        if (confirm("删除编号为" + id + "的子课题？")) {
                             $.ajax({
                                 type: 'DELETE',
-                                url: 'project/delete/' + id,
+                                url: 'subTopic/delete/' + id,
                                 success: function (result) {
                                     if (result.metaInfo.status === 200) {
                                         alert("删除成功");
-                                        location.href = "project.html";
+                                        location.href = "subTopic.html";
                                     } else {
                                         alert("删除失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "project.html";
+                                        location.href = "subTopic.html";
                                     }
                                 },
                                 error: function (result) {
                                     alert("删除失败");
-                                    location.href = "project.html";
+                                    location.href = "subTopic.html";
                                 }
                             });
                         }
@@ -231,7 +213,7 @@
     <body>
         <div id="header"></div>
         <div class="container-fluid">
-            <h3 style="text-align:center">科研项目列表</h3>
+            <h3 style="text-align:center">子课题列表</h3>
             <div class="row">
 
                 <div class="hidden-xs col-sm-1"></div>
@@ -241,15 +223,14 @@
                            style="text-align: center;" id="table">
                         <tr class="success">
                             <th style='vertical-align:middle'>编号</th>
-                            <th style='vertical-align:middle'>名称</th>
+                            <th style='vertical-align:middle'>完成时间</th>
+                            <th style='vertical-align:middle'>经费</th>
+                            <th style='vertical-align:middle'>技术指标</th>
                             <th style='vertical-align:middle'>负责人编号</th>
                             <th style='vertical-align:middle'>负责人</th>
-                            <th style='vertical-align:middle'>研究内容</th>
-                            <th style='vertical-align:middle'>经费</th>
-                            <th style='vertical-align:middle'>起始时间</th>
-                            <th style='vertical-align:middle'>完成时间</th>
-                            <th style='vertical-align:middle'>成员</th>
-                            <th style='vertical-align:middle'>子项目</th>
+                            <th style='vertical-align:middle'>所属项目编号</th>
+                            <th style='vertical-align:middle'>所属项目名称</th>
+                            <th style='vertical-align:middle'>课题成员</th>
                             <th style='vertical-align:middle'>更新</th>
                             <th style='vertical-align:middle'>删除</th>
                         </tr>
@@ -261,7 +242,7 @@
                 <div class="col-xs-12">
                     <center>
                         <a class="btn btn btn-info" type="button" id="addBtn">
-                            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加科研项目</a>
+                            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加子课题</a>
                     </center>
                 </div>
                 <div class="col-xs-12" style="margin-bottom: 35px"></div>
@@ -275,42 +256,40 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑科研项目</h4>
+                        <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑子课题</h4>
                     </div>
                     <div class="modal-body" id="windowContent">
                         <center>
                             <form style="width: 400px" action="" id="changeForm" accept-charset="utf-8">
                                 <div class="form-group">
-                                    <label>科研项目编号：</label>
+                                    <label>子课题编号：</label>
                                     <input type="text" name="id" class="form-control" id="id" disabled placeholder=""/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name">名称</label>
-                                    <input type="text" name="name" class="form-control" id="name"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="principalId">负责人编号</label>
-                                    <input type="text" name="principalId" class="form-control" id="principalId"/>
-                                </div>
-
-                                <div class="alert alert-info alert-dismissible" id="successFind1" role="alert" style="display: none"></div>
-
-                                <div class="form-group">
-                                    <label for="researchContent">研究内容</label>
-                                    <input type="text" name="researchContent" class="form-control" id="researchContent"/>
+                                    <label for="finishTime">完成时间</label>
+                                    <input type="text" name="finishTime" class="form-control" id="finishTime"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="fund">经费</label>
                                     <input type="text" name="fund" class="form-control" id="fund"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="startTime">起始时间</label>
-                                    <input type="text" name="startTime" class="form-control" id="startTime"/>
+                                    <label for="techIndex">技术指标</label>
+                                    <input type="text" name="techIndex" class="form-control" id="techIndex"/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="finishTime">完成时间</label>
-                                    <input type="text" name="finishTime" class="form-control" id="finishTime"/>
+                                    <label for="principalId">负责人编号</label>
+                                    <input type="text" name="principalId" class="form-control" id="principalId"/>
                                 </div>
+                                <div class="alert alert-info alert-dismissible" id="successFind1" role="alert"
+                                     style="display: none"></div>
+                                <div class="form-group">
+                                    <label for="projectId">所属项目编号</label>
+                                    <input type="text" name="projectId" class="form-control" id="projectId"/>
+                                </div>
+                                <div class="alert alert-info alert-dismissible" id="successFind2" role="alert"
+                                     style="display: none"></div>
+
 
 
                                 <div class="form-group" style="text-align: center;">

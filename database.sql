@@ -181,6 +181,16 @@ CREATE TABLE user
     password 			TEXT NOT NULL
 );
 
+-- 保证子课题的所属项目一致
+CREATE TRIGGER ins_check
+    BEFORE INSERT ON join_project
+    FOR EACH ROW
+BEGIN
+    IF new.project_id NOT IN (SELECT project_id FROM sub_topic WHERE id = new.sub_topic_id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project of this sub_topic is wrong';
+    END IF;
+END;
+
 INSERT INTO user VALUES (NULL,'user','user');
 INSERT INTO secretary VALUES (NULL,'郭德纲','男',50,'2020-1-1','基础工作');
 INSERT INTO secretary VALUES (NULL,'于谦','男',50,'2020-1-1','基础工作');
@@ -217,7 +227,9 @@ INSERT INTO sub_topic VALUES (NULL,'2019-1-1','5万','指标1',13,1);
 INSERT INTO sub_topic VALUES (NULL,'2019-5-1','15万','指标2',14,1);
 INSERT INTO sub_topic VALUES (NULL,'2019-10-1','20万','指标3',8,2);
 
-INSERT INTO join_project VALUES (NULL,13,1,1,'2018-1-1','总负责','5W');
-INSERT INTO join_project VALUES (NULL,14,1,2,'2018-1-1','技术指导','15W');
-INSERT INTO join_project VALUES (NULL,8,2,1,'2018-1-1','技术指导','15W');
+INSERT INTO join_project VALUES (NULL,13,1,1,'2018-1-1','总负责','5万');
+INSERT INTO join_project VALUES (NULL,14,1,2,'2018-1-1','技术指导','15万');
+INSERT INTO join_project VALUES (NULL,8,2,3,'2018-1-1','技术指导','10万');
+INSERT INTO join_project VALUES (NULL,11,2,3,'2018-1-1','技术指导','10万');
+
 

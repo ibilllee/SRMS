@@ -22,11 +22,11 @@ public class StudioController
 		try {
 			result=studioService.add(studio);
 		} catch (Exception e){
-			return RespBean.unprocessable("研究室创建失败"+e.getMessage(), studio);
+			return RespBean.unprocessable("工作室创建失败"+e.getMessage(), studio);
 		}
 		if (result)
-			return RespBean.ok("研究室创建成功", studio);
-		return RespBean.unprocessable("研究室创建失败", studio);
+			return RespBean.ok("工作室创建成功", studio);
+		return RespBean.unprocessable("工作室创建失败", studio);
 	}
 
 	@GetMapping("/get/{id}")

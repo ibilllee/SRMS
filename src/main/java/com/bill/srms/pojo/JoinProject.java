@@ -8,16 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Table(name = "sub_topic")
-public class SubTopic {
+@Table(name = "join_project")
+public class JoinProject {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String finishTime;
-    private String fund;
-    private String techIndex;
-    private Integer principalId;
-    private String principalName;
+    private Integer researcherId;
+    private String researcherName;
     private Integer projectId;
     private String projectName;
+    private Integer subTopicId;
+    private String joinTime;
+    private String workload;
+    private String fund;
 }

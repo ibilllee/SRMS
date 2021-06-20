@@ -1,6 +1,5 @@
 package com.bill.srms.controller;
 
-import com.bill.srms.pojo.ResearchStudio;
 import com.bill.srms.pojo.Researcher;
 import com.bill.srms.pojo.RespBean;
 import com.bill.srms.service.ResearcherService;
@@ -64,11 +63,22 @@ public class ResearcherController {
         return RespBean.ok("获取成功",result);
     }
 
-    @GetMapping("/getByProjectId/{studioId}")
-    private RespBean getByProjectId(@PathVariable Integer studioId){
+    @GetMapping("/getByProjectId/{projectId}")
+    private RespBean getByProjectId(@PathVariable Integer projectId){
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
-            result.put("researcherList", researcherService.getByProjectId(studioId));
+            result.put("researcherList", researcherService.getByProjectId(projectId));
+        }catch (Exception e) {
+            return RespBean.unprocessable("获取失败" + e.getMessage());
+        }
+        return RespBean.ok("获取成功",result);
+    }
+
+    @GetMapping("/getBySubTopicId/{subTopicId}")
+    private RespBean getBySubTopicId(@PathVariable Integer subTopicId){
+        HashMap<String, List<Researcher>> result = new HashMap<>();
+        try {
+            result.put("researcherList", researcherService.getBySubTopicId(subTopicId));
         }catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
