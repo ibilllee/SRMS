@@ -60,7 +60,7 @@ CREATE TABLE project
     principal_id     INT,
     name             TEXT NOT NULL,
     research_content TEXT,
-    fund             DOUBLE,
+    fund             TEXT,
     start_time       TEXT,
     finish_time      TEXT
 #     FOREIGN KEY (principal_id) REFERENCES research_studio (id)
@@ -71,7 +71,7 @@ CREATE TABLE sub_topic
 (
     id           INT PRIMARY KEY AUTO_INCREMENT,
     finish_time  TEXT,
-    fund         DOUBLE,
+    fund         TEXT,
     tech_index   TEXT,
     principal_id INT,
     project_id   INT
@@ -143,7 +143,7 @@ CREATE TABLE join_project
     sub_topic_id  INT NOT NULL,
     join_time     TEXT,
     workload      TEXT,
-    fund          DOUBLE
+    fund          TEXT
 #     FOREIGN KEY (researcher_id) REFERENCES researcher (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT,
 #     FOREIGN KEY (project_id) REFERENCES project (id)
@@ -200,12 +200,24 @@ INSERT INTO researcher VALUES (NULL,'程兴国','男','讲师',40,'数据挖掘'
 
 INSERT INTO researcher VALUES (NULL,'张平健','男','教授',40,'软件体系结构',2);
 INSERT INTO researcher VALUES (NULL,'奚建清','男','教授',40,'软件体系结构',2);
+INSERT INTO researcher VALUES (NULL,'汤德佑','男','副教授',40,'群体智能',2);
 INSERT INTO researcher VALUES (NULL,'黄敏'  ,'女','副教授',40,'信息处理与服务',2);
 INSERT INTO researcher VALUES (NULL,'陈虎'  ,'男','副教授',40,'信息处理与服务',2);
-INSERT INTO researcher VALUES (NULL,'汤德佑','男','副教授',40,'群体智能',2);
 INSERT INTO researcher VALUES (NULL,'林连南','男','讲师',30,'群体智能',2);
 INSERT INTO researcher VALUES (NULL,'陈春华','男','讲师',30,'高效能计算',2);
 
 INSERT INTO researcher VALUES (NULL,'李东','男','教授',40,'数据库系统',3);
 INSERT INTO researcher VALUES (NULL,'徐杨','男','讲师',40,'分布式系统',3);
 INSERT INTO researcher VALUES (NULL,'何月涵','女','助理',40,'扫地',3);
+
+INSERT INTO project VALUES (NULL,13,'云计算平台DCloud','高性能云计算综合协同平台','20万','2018-1-1','2020-1-1');
+INSERT INTO project VALUES (NULL,8,'语言识别系统','客户语言自动识别关键技术研究','20万','2017-1-1','2019-1-1');
+
+INSERT INTO sub_topic VALUES (NULL,'2019-1-1','5万','指标1',13,1);
+INSERT INTO sub_topic VALUES (NULL,'2019-5-1','15万','指标2',14,1);
+INSERT INTO sub_topic VALUES (NULL,'2019-10-1','20万','指标3',8,2);
+
+INSERT INTO join_project VALUES (NULL,13,1,1,'2018-1-1','总负责','5W');
+INSERT INTO join_project VALUES (NULL,14,1,2,'2018-1-1','技术指导','15W');
+INSERT INTO join_project VALUES (NULL,8,2,1,'2018-1-1','技术指导','15W');
+

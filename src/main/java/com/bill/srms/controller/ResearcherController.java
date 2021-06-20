@@ -64,6 +64,17 @@ public class ResearcherController {
         return RespBean.ok("获取成功",result);
     }
 
+    @GetMapping("/getByProjectId/{studioId}")
+    private RespBean getByProjectId(@PathVariable Integer studioId){
+        HashMap<String, List<Researcher>> result = new HashMap<>();
+        try {
+            result.put("researcherList", researcherService.getByProjectId(studioId));
+        }catch (Exception e) {
+            return RespBean.unprocessable("获取失败" + e.getMessage());
+        }
+        return RespBean.ok("获取成功",result);
+    }
+
     @DeleteMapping("/delete/{id}")
     public RespBean delete(@PathVariable Integer id){
         boolean result;

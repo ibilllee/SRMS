@@ -20,4 +20,14 @@ public interface ResearcherMapper extends Mapper<Researcher> {
 
     @Select(" SELECT * FROM researcher WHERE id = #{id} ")
     Researcher selectById(Integer id);
+
+    @Select(" SELECT R.*, S.name as studio_name " +
+            " FROM researcher R " +
+            " LEFT JOIN research_studio S " +
+            " ON R.studio_id = S.id " +
+            " WHERE R.id IN ( " +
+            "     SELECT researcher_id " +
+            "     FROM join_project " +
+            "     WHERE project_id = #{projectId});")
+    List<Researcher> selectByProjectId(Integer projectId);
 }

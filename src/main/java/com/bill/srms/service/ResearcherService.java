@@ -35,4 +35,8 @@ public class ResearcherService {
     public Researcher getById(Integer id) {
         return researcherMapper.selectById(id);
     }
+
+    public List<Researcher> getByProjectId(Integer projectId) {
+        return researcherMapper.selectByProjectId(projectId);
+    }
 }
