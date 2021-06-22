@@ -100,10 +100,9 @@ CREATE TABLE achievement
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
     name        TEXT NOT NULL,
-    TIME        TEXT,
-    rankId      INT,
-    type        ENUM ('patent','paper','software_copyright'),
-    patent_type ENUM ('invention','utility_model','exterior'),
+    time        TEXT,
+    rank_id      INT,
+    type        ENUM ('专利：发明','专利：实用新型','专利：外观','论文','软件著作权'),
     project_id  INT
 #     FOREIGN KEY (project_id) REFERENCES project (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT
