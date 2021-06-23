@@ -231,4 +231,10 @@ INSERT INTO join_project VALUES (NULL,14,1,2,'2018-1-1','技术指导','15万');
 INSERT INTO join_project VALUES (NULL,8,2,3,'2018-1-1','技术指导','10万');
 INSERT INTO join_project VALUES (NULL,11,2,3,'2018-1-1','技术指导','10万');
 
+INSERT INTO achievement VALUES (NULL,'国家一等奖','2020-1-1',1,'软件著作权',1);
+INSERT INTO achievement VALUES (NULL,'国家一等奖','2020-1-1',1,'专利：发明',2);
 
+INSERT INTO contribute_to VALUES (NULL,13,1);
+INSERT INTO contribute_to VALUES (NULL,14,1);
+INSERT INTO contribute_to VALUES (NULL,8,2);
+INSERT INTO contribute_to VALUES (NULL,11,2);
