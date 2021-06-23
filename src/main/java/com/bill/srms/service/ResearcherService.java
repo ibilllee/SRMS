@@ -43,4 +43,8 @@ public class ResearcherService {
     public List<Researcher> getBySubTopicId(Integer subTopicId) {
         return researcherMapper.selectBySubTopic(subTopicId);
     }
+
+    public List<Researcher> getByAchievementId(Integer achievementId) {
+        return researcherMapper.selectByAchievementId(achievementId);
+    }
 }
