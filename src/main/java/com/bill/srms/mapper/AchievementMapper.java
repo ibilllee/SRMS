@@ -15,6 +15,6 @@ public interface AchievementMapper extends Mapper<Achievement> {
             " ON A.project_id = P.id;")
     List<Achievement> selectAllWithProject();
 
-    @Select(" SELECT * FROM research_studio WHERE id = #{id} ")
+    @Select(" SELECT * FROM achievement WHERE id = #{id} ")
     Achievement selectById(Integer id);
 }

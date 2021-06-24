@@ -38,7 +38,7 @@ public class StudioController
 			return RespBean.unprocessable("获取失败");
 		}
 		if (studio!=null)
-			return RespBean.ok("获取成果",studio);
+			return RespBean.ok("获取成功",studio);
 		return RespBean.unprocessable("该工作室不存在");
 	}
 

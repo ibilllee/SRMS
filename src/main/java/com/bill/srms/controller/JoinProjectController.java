@@ -37,7 +37,7 @@ public class JoinProjectController {
             return RespBean.unprocessable("获取失败");
         }
         if (joinProject!=null)
-            return RespBean.ok("获取成果",joinProject);
+            return RespBean.ok("获取成功",joinProject);
         return RespBean.unprocessable("该项目参与条目不存在");
     }
 

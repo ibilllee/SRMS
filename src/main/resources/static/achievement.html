@@ -15,12 +15,13 @@
                 $("#header").html(data);
             });
 
+            // 失焦检查 -> 编辑表单中要检查的元素
             $("#projectId").blur(function () {
                 var projectId = $(this).val();
                 $.get("project/get/" + projectId, function (result) {
                     if (result.metaInfo.status === 200) {
                         displayInfo($("#successFind1"), "您填入了: " + result.data.name);
-                    } else if (result.metaInfo.msg === "该项目不存在") {
+                    } else if (result.metaInfo.msg === "该不存在") {
                         displayInfo($("#successFind1"), "该编号对应的项目不存在");
                     } else {
                         displayInfo($("#successFind1"), "验证项目失败");
@@ -230,8 +231,12 @@
             <center>
                 <a class="btn btn btn-info" type="button" id="addBtn">
                     <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加成果信息</a>
+                &nbsp;&nbsp;
+                <a href="contribute.html " class="btn btn btn-info" type="button" >
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;向成果添加科研者贡献</a>
             </center>
         </div>
+
         <div class="col-xs-12" style="margin-bottom: 35px"></div>
     </div>
 </div>

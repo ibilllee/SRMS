@@ -38,7 +38,7 @@ public class ProjectController {
             return RespBean.unprocessable("获取失败");
         }
         if (project!=null)
-            return RespBean.ok("获取成果",project);
+            return RespBean.ok("获取成功",project);
         return RespBean.unprocessable("该科研项目不存在");
     }
 

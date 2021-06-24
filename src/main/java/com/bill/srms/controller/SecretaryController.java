@@ -40,7 +40,7 @@ public class SecretaryController {
             return RespBean.unprocessable("获取失败");
         }
         if (secretary!=null)
-            return RespBean.ok("获取成果",secretary);
+            return RespBean.ok("获取成功",secretary);
         return RespBean.unprocessable("该秘书不存在");
     }
 

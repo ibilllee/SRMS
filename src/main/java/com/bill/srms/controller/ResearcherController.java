@@ -37,7 +37,7 @@ public class ResearcherController {
             return RespBean.unprocessable("获取失败");
         }
         if (researcher!=null)
-            return RespBean.ok("获取成果",researcher);
+            return RespBean.ok("获取成功",researcher);
         return RespBean.unprocessable("该科研者不存在");
     }
 

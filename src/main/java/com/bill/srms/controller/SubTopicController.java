@@ -38,7 +38,7 @@ public class SubTopicController {
             return RespBean.unprocessable("获取失败");
         }
         if (subTopic!=null)
-            return RespBean.ok("获取成果",subTopic);
+            return RespBean.ok("获取成功",subTopic);
         return RespBean.unprocessable("该子课题不存在");
     }
 
