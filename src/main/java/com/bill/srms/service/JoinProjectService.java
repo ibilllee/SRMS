@@ -12,7 +12,7 @@ public class JoinProjectService {
     @Autowired
     private JoinProjectMapper joinProjectMapper;
 
-    public boolean add(JoinProject project) {
+    public boolean add(JoinProject project){
         return joinProjectMapper.insertSelective(project) == 1;
     }
 
