@@ -28,11 +28,11 @@ public class JoinProjectController {
                 e.getMessage().contains("The project of this sub_topic is wrong");
                 return RespBean.unprocessable("子课题不属于该项目", joinProject);
             }
-            return RespBean.unprocessable("项目参与条目创建失败" + e.getMessage(), joinProject);
+            return RespBean.unprocessable("添加失败" + e.getMessage(), joinProject);
         }
         if (result)
-            return RespBean.ok("项目参与条目创建成功", joinProject);
-        return RespBean.unprocessable("项目参与条目创建失败", joinProject);
+            return RespBean.ok("添加成功", joinProject);
+        return RespBean.unprocessable("添加失败", joinProject);
     }
 
     @GetMapping("/get/{id}")
@@ -45,7 +45,7 @@ public class JoinProjectController {
         }
         if (joinProject != null)
             return RespBean.ok("获取成功", joinProject);
-        return RespBean.unprocessable("该项目参与条目不存在");
+        return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")

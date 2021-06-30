@@ -21,7 +21,7 @@
                 $.get("project/get/" + projectId, function (result) {
                     if (result.metaInfo.status === 200) {
                         displayInfo($("#successFind1"), "您填入了: " + result.data.name);
-                    } else if (result.metaInfo.msg === "该不存在") {
+                    } else if (result.metaInfo.msg === "不存在") {
                         displayInfo($("#successFind1"), "该编号对应的项目不存在");
                     } else {
                         displayInfo($("#successFind1"), "验证项目失败");

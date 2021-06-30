@@ -22,11 +22,11 @@ public class ProjectController {
         try {
             result=projectService.add(project);
         } catch (Exception e){
-            return RespBean.unprocessable("科研项目创建失败"+e.getMessage(), project);
+            return RespBean.unprocessable("添加失败"+e.getMessage(), project);
         }
         if (result)
-            return RespBean.ok("科研项目创建成功", project);
-        return RespBean.unprocessable("科研项目创建失败", project);
+            return RespBean.ok("添加成功", project);
+        return RespBean.unprocessable("添加失败", project);
     }
 
     @GetMapping("/get/{id}")
@@ -39,7 +39,7 @@ public class ProjectController {
         }
         if (project!=null)
             return RespBean.ok("获取成功",project);
-        return RespBean.unprocessable("该科研项目不存在");
+        return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")

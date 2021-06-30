@@ -1,9 +1,8 @@
 package com.bill.srms.controller;
 
-import com.bill.srms.pojo.Researcher;
-import com.bill.srms.pojo.SubTopic;
+import com.bill.srms.pojo.PerCoo;
 import com.bill.srms.pojo.RespBean;
-import com.bill.srms.service.SubTopicService;
+import com.bill.srms.service.PerCooService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,53 +10,42 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/subTopic")
-public class SubTopicController {
+@RequestMapping("/perCoo")
+public class PerCooController {
     @Autowired
-    private SubTopicService subTopicService;
-    
+    private PerCooService perCooService;
+
     @PostMapping("/add")
-    public RespBean add(SubTopic subTopic){
+    public RespBean add(PerCoo perCoo){
         boolean result ;
         try {
-            result=subTopicService.add(subTopic);
+            result=perCooService.add(perCoo);
         } catch (Exception e){
-            return RespBean.unprocessable("添加失败"+e.getMessage(), subTopic);
+            return RespBean.unprocessable("添加失败"+e.getMessage(), perCoo);
         }
         if (result)
-            return RespBean.ok("添加成功", subTopic);
-        return RespBean.unprocessable("添加失败", subTopic);
+            return RespBean.ok("添加成功", perCoo);
+        return RespBean.unprocessable("添加失败", perCoo);
     }
 
     @GetMapping("/get/{id}")
     public RespBean get(@PathVariable Integer id){
-        SubTopic subTopic;
+        PerCoo perCoo;
         try {
-            subTopic=subTopicService.getById(id);
+            perCoo=perCooService.getById(id);
         }catch (Exception e){
             return RespBean.unprocessable("获取失败");
         }
-        if (subTopic!=null)
-            return RespBean.ok("获取成功",subTopic);
+        if (perCoo!=null)
+            return RespBean.ok("获取成功",perCoo);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
     public RespBean getAll(){
-        HashMap<String, List<SubTopic>> result = new HashMap<>();
+        HashMap<String, List<PerCoo>> result = new HashMap<>();
         try {
-            result.put("subTopicList", subTopicService.getAll());
-        }catch (Exception e) {
-            return RespBean.unprocessable("获取失败" + e.getMessage());
-        }
-        return RespBean.ok("获取成功",result);
-    }
-
-    @GetMapping("/getByProjectId/{projectId}")
-    private RespBean getByProjectId(@PathVariable Integer projectId){
-        HashMap<String, List<SubTopic>> result = new HashMap<>();
-        try {
-            result.put("subTopicList", subTopicService.getByProjectId(projectId));
+            result.put("perCooList", perCooService.getAll());
         }catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
@@ -68,7 +56,7 @@ public class SubTopicController {
     public RespBean delete(@PathVariable Integer id){
         boolean result;
         try {
-            result=subTopicService.delete(id);
+            result=perCooService.delete(id);
         }catch (Exception e){
             return RespBean.unprocessable("删除失败"+e.getMessage());
         }
@@ -78,15 +66,15 @@ public class SubTopicController {
     }
 
     @PutMapping("/update")
-    public RespBean update(SubTopic subTopic){
+    public RespBean update(PerCoo perCoo){
         boolean result;
         try {
-            result = subTopicService.update(subTopic);
+            result = perCooService.update(perCoo);
         } catch (Exception e) {
             return RespBean.unprocessable("修改失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("修改成功", subTopic);
+            return RespBean.ok("修改成功", perCoo);
         return RespBean.unprocessable("修改失败");
     }
 }

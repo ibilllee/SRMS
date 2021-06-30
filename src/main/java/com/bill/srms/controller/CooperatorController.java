@@ -1,51 +1,51 @@
 package com.bill.srms.controller;
 
-import com.bill.srms.pojo.Achievement;
 import com.bill.srms.pojo.RespBean;
-import com.bill.srms.service.AchievementService;
+import com.bill.srms.pojo.Cooperator;
+import com.bill.srms.service.CooperatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
 
+@RequestMapping("/cooperator")
 @RestController
-@RequestMapping("/achievement")
-public class AchievementController {
+public class CooperatorController {
     @Autowired
-    private AchievementService achievementService;
+    private CooperatorService cooperatorService;
 
     @PostMapping("/add")
-    public RespBean add(Achievement achievement){
-        boolean result ;
+    public RespBean add(Cooperator cooperator) {
+        boolean result;
         try {
-            result=achievementService.add(achievement);
-        } catch (Exception e){
-            return RespBean.unprocessable("添加失败"+e.getMessage(), achievement);
+            result = cooperatorService.add(cooperator);
+        } catch (Exception e) {
+            return RespBean.unprocessable("添加失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("添加成功", achievement);
-        return RespBean.unprocessable("添加失败", achievement);
+            return RespBean.ok("添加成功", cooperator);
+        return RespBean.unprocessable("添加失败");
     }
 
     @GetMapping("/get/{id}")
     public RespBean get(@PathVariable Integer id){
-        Achievement achievement;
+        Cooperator cooperator;
         try {
-            achievement=achievementService.getById(id);
+            cooperator=cooperatorService.getById(id);
         }catch (Exception e){
             return RespBean.unprocessable("获取失败");
         }
-        if (achievement!=null)
-            return RespBean.ok("获取成功",achievement);
+        if (cooperator!=null)
+            return RespBean.ok("获取成功",cooperator);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
-        HashMap<String, List<Achievement>> result = new HashMap<>();
+    private RespBean getAll(){
+        HashMap<String, List<Cooperator>> result = new HashMap<>();
         try {
-            result.put("achievementList", achievementService.getAll());
+            result.put("cooperatorList", cooperatorService.getAll());
         }catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
@@ -56,7 +56,7 @@ public class AchievementController {
     public RespBean delete(@PathVariable Integer id){
         boolean result;
         try {
-            result=achievementService.delete(id);
+            result=cooperatorService.delete(id);
         }catch (Exception e){
             return RespBean.unprocessable("删除失败"+e.getMessage());
         }
@@ -66,16 +66,15 @@ public class AchievementController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Achievement achievement){
+    public RespBean update(Cooperator cooperator){
         boolean result;
         try {
-            result = achievementService.update(achievement);
+            result = cooperatorService.update(cooperator);
         } catch (Exception e) {
             return RespBean.unprocessable("修改失败" + e.getMessage());
         }
         if (result)
-            return RespBean.ok("修改成功", achievement);
+            return RespBean.ok("修改成功", cooperator);
         return RespBean.unprocessable("修改失败");
     }
-    
 }

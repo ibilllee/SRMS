@@ -20,7 +20,7 @@
                     $.get("researcher/get/" + principalId, function (result) {
                         if (result.metaInfo.status === 200) {
                             displayInfo($("#successFind1"), "您填入了: " + result.data.name);
-                        } else if (result.metaInfo.msg === "该科研者不存在") {
+                        } else if (result.metaInfo.msg === "不存在") {
                             displayInfo($("#successFind1"), "该编号对应的科研负责人不存在");
                         } else {
                             displayInfo($("#successFind1"), "验证负责人失败");

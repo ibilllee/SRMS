@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS secretary;
 CREATE TABLE secretary
 (
     id          INT PRIMARY KEY AUTO_INCREMENT,
-    name        TEXT                 NOT NULL,
+    name        TEXT           NOT NULL,
     gender      ENUM ('男','女') NOT NULL,
     age         INT,
     employ_time TEXT,
@@ -84,7 +84,7 @@ CREATE TABLE sub_topic
 CREATE TABLE researcher
 (
     id                 INT PRIMARY KEY AUTO_INCREMENT,
-    name               TEXT                 NOT NULL,
+    name               TEXT           NOT NULL,
     gender             ENUM ('男','女') NOT NULL,
     title              TEXT,
     age                INT,
@@ -98,12 +98,12 @@ CREATE TABLE researcher
 
 CREATE TABLE achievement
 (
-    id          INT PRIMARY KEY AUTO_INCREMENT,
-    name        TEXT NOT NULL,
-    time        TEXT,
-    rank_id      INT,
-    type        ENUM ('专利：发明','专利：实用新型','专利：外观','论文','软件著作权'),
-    project_id  INT
+    id         INT PRIMARY KEY AUTO_INCREMENT,
+    name       TEXT NOT NULL,
+    time       TEXT,
+    rank_id    INT,
+    type       ENUM ('专利：发明','专利：实用新型','专利：外观','论文','软件著作权'),
+    project_id INT
 #     FOREIGN KEY (project_id) REFERENCES project (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT
 );
@@ -118,6 +118,7 @@ CREATE TABLE cooperator
 CREATE TABLE person
 (
     id           INT PRIMARY KEY AUTO_INCREMENT,
+    name         TEXT NOT NULL,
     mail         TEXT NOT NULL,
     office_phone TEXT NOT NULL,
     mobile_phone TEXT NOT NULL
@@ -154,7 +155,7 @@ CREATE TABLE with_other
     id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     project_id    INT NOT NULL,
-    type          ENUM ('commission','cooperation','supervision')
+    type          ENUM ('合作方','委托方','质量监测方')
 #     FOREIGN KEY (cooperator_id) REFERENCES cooperator (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT,
 #     FOREIGN KEY (project_id) REFERENCES project (id)
@@ -166,7 +167,7 @@ CREATE TABLE per_coo
     id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     person_id     INT NOT NULL,
-    type          ENUM ('contact','principal')
+    type          ENUM ('联系人','负责人')
 #     FOREIGN KEY (cooperator_id) REFERENCES cooperator (id)
 #         ON DELETE RESTRICT ON UPDATE RESTRICT,
 #     FOREIGN KEY (person_id) REFERENCES person (id)
@@ -175,20 +176,45 @@ CREATE TABLE per_coo
 
 CREATE TABLE user
 (
-    id            INT PRIMARY KEY AUTO_INCREMENT,
-    username 			VARCHAR(255) NOT NULL,
-    password 			TEXT NOT NULL
+    id       INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    password TEXT         NOT NULL
 );
 
--- 保证子课题的所属项目一致
-CREATE TRIGGER ins_check
-    BEFORE INSERT ON join_project
+# 保证子课题的所属项目一致
+CREATE TRIGGER sub_ins_check
+    BEFORE INSERT
+    ON join_project
     FOR EACH ROW
 BEGIN
     IF new.project_id NOT IN (SELECT project_id FROM sub_topic WHERE id = new.sub_topic_id) THEN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project of this sub_topic is wrong';
     END IF;
 END;
+
+# 保证只有唯一委托方或质量监测方
+CREATE TRIGGER with_other_ins_check
+    BEFORE INSERT
+    ON with_other
+    FOR EACH ROW
+BEGIN
+    IF (new.type = '质量监测方' OR new.type = '委托方') AND
+       EXISTS(SELECT * FROM with_other WHERE project_id = new.project_id AND type = new.type) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project cooperator has already exist';
+    END IF;
+END;
+
+#保证一个相关单位只有一个负责人
+CREATE TRIGGER per_coo_ins_check
+    BEFORE INSERT
+    ON per_coo
+    FOR EACH ROW
+BEGIN
+    IF (new.type = '负责人' AND
+        EXISTS(SELECT * FROM per_coo WHERE cooperator_id = new.cooperator_id AND type = new.type)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The cooperator\'s  pricipal has already exist';
+    END IF;
+end;
 
 INSERT INTO user VALUES (NULL,'user','user');
 INSERT INTO secretary VALUES (NULL,'郭德纲','男',50,'2020-1-1','基础工作');
@@ -238,3 +264,14 @@ INSERT INTO contribute_to VALUES (NULL,13,1);
 INSERT INTO contribute_to VALUES (NULL,14,1);
 INSERT INTO contribute_to VALUES (NULL,8,2);
 INSERT INTO contribute_to VALUES (NULL,11,2);
+
+INSERT INTO cooperator VALUES (NULL,'中大智工','中山大学智能工程学院-101');
+INSERT INTO with_other VALUES (NULL,1,1,'委托方');
+
+INSERT INTO person VALUES (NULL,'中大张三','zhangsan@sysu.com','110','54110');
+INSERT INTO person VALUES (NULL,'中大李四','lisi@sysu.com','119','54119');
+INSERT INTO person VALUES (NULL,'中大王五','wangwu@sysu.com','120','54120');
+
+INSERT INTO per_coo VALUES (NULL,1,1,'联系人');
+INSERT INTO per_coo VALUES (NULL,1,2,'联系人');
+INSERT INTO per_coo VALUES (NULL,1,3,'负责人');

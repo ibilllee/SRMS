@@ -38,7 +38,7 @@ public class ResearcherController {
         }
         if (researcher!=null)
             return RespBean.ok("获取成功",researcher);
-        return RespBean.unprocessable("该科研者不存在");
+        return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")

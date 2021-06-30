@@ -21,11 +21,11 @@ public class ContributeController {
         try {
             result=contributeService.add(contribute);
         } catch (Exception e){
-            return RespBean.unprocessable("科研者贡献信息创建失败"+e.getMessage(), contribute);
+            return RespBean.unprocessable("添加失败"+e.getMessage(), contribute);
         }
         if (result)
-            return RespBean.ok("科研者贡献信息创建成功", contribute);
-        return RespBean.unprocessable("科研者贡献信息创建失败", contribute);
+            return RespBean.ok("添加成功", contribute);
+        return RespBean.unprocessable("添加失败", contribute);
     }
 
     @GetMapping("/get/{id}")
@@ -38,7 +38,7 @@ public class ContributeController {
         }
         if (contribute!=null)
             return RespBean.ok("获取成功",contribute);
-        return RespBean.unprocessable("科研者贡献信息不存在");
+        return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")

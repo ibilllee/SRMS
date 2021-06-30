@@ -41,7 +41,7 @@ public class SecretaryController {
         }
         if (secretary!=null)
             return RespBean.ok("获取成功",secretary);
-        return RespBean.unprocessable("该秘书不存在");
+        return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
