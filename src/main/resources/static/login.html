@@ -11,7 +11,7 @@
 
             $("#login_btn").click(function () {
                 $.post("user/loginPost", $("#login_form").serialize(), function (data) {
-                    if (data.metaInfo.status==200) { //登陆成功
+                    if (data.metaInfo.status == 200) { //登陆成功
                         location.href = "index.html";
                     } else {
                         var err_msg_block = $("#err_msg_block");
@@ -25,36 +25,40 @@
     </script>
 </head>
 <body>
-<h1 style="text-align: center;margin-top:50px;">华南理工大学 科研管理系统</h1>
-    <div class="container" id="submitForm" style="width:400px">
-        <h3 style="text-align: center;">用户登录</h3>
-        <form action="" id="login_form" method="post" accept-charset="utf-8">
-            <div class="form-group">
-                <label for="username">用户名：</label>
-                <span class="glyphicon glyphicon-user"></span>
-                <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名"/>
-            </div>
-
-            <div class="form-group">
-                <label for="password">密码：</label>
-                <span class="glyphicon glyphicon-lock"></span>
-                <input type="password" name="password" class="form-control" id="password"
-                       placeholder="请输入密码"/>
-            </div>
-            <hr/>
-
-            <!-- 出错显示的信息框 -->
-            <div class="alert alert-info alert-dismissible" role="alert" id="err_msg_block" style="display: none;">
-                <button type="button" class="close" data-dismiss="alert" id="err_msg_block_x">
-                    <span id="err_msg_block_x_y">&times;</span>
-                </button>
-                <strong>状态提示</strong>
-            </div>
-
-            <div class="form-group" style="text-align: center;">
-                <input class="btn btn btn-primary" type="button" value="登录" id="login_btn">
-            </div>
-        </form>
+<div class="container" id="submitForm" style="width:400px">
+    <div style="margin-top: 20px"></div>
+    <div style="text-align: center">
+        <img src="pic/logo.jpg" width="70%"/>
     </div>
+    <h1 style="text-align: center;margin-top:30px;">科研管理系统</h1>
+    <h3 style="text-align: center;">用户登录</h3>
+    <form action="" id="login_form" method="post" accept-charset="utf-8">
+        <div class="form-group">
+            <label for="username">用户名：</label>
+            <span class="glyphicon glyphicon-user"></span>
+            <input type="text" name="username" class="form-control" id="username" placeholder="请输入用户名"/>
+        </div>
+
+        <div class="form-group">
+            <label for="password">密码：</label>
+            <span class="glyphicon glyphicon-lock"></span>
+            <input type="password" name="password" class="form-control" id="password"
+                   placeholder="请输入密码"/>
+        </div>
+        <hr/>
+
+        <!-- 出错显示的信息框 -->
+        <div class="alert alert-info alert-dismissible" role="alert" id="err_msg_block" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert" id="err_msg_block_x">
+                <span id="err_msg_block_x_y">&times;</span>
+            </button>
+            <strong>状态提示</strong>
+        </div>
+
+        <div class="form-group" style="text-align: center;">
+            <input class="btn btn btn-primary" type="button" value="登录" id="login_btn">
+        </div>
+    </form>
+</div>
 </body>
 </html>
