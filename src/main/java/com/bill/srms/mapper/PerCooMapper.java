@@ -10,7 +10,7 @@ import java.util.List;
 public interface PerCooMapper extends Mapper<PerCoo> {
     @Select(" SELECT PC.*,P.name as person_name,C.name as cooperator_name " +
             " FROM per_coo PC " +
-            " LEFT JOIN Person P " +
+            " LEFT JOIN person P " +
             " ON PC.person_id = P.id " +
             " LEFT JOIN cooperator C " +
             " ON PC.cooperator_id = C.id; ")

@@ -9,7 +9,7 @@ import java.util.List;
 public interface WithOtherMapper extends Mapper<WithOther> {
     @Select(" SELECT W.*,P.name as project_name,C.name as cooperator_name " +
             " FROM with_other W " +
-            " LEFT JOIN Project P " +
+            " LEFT JOIN project P " +
             " ON W.project_id = P.id " +
             " LEFT JOIN cooperator C " +
             " ON W.cooperator_id = C.id; ")

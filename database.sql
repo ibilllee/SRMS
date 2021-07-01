@@ -38,10 +38,9 @@ CREATE TABLE research_studio
     principal_id       INT,
     p_start_time       TEXT,
     p_term             TEXT,
-    secretary_id       INT
+    secretary_id       INT,
 
-#     FOREIGN KEY (secretary_id) REFERENCES secretary (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    FOREIGN KEY (secretary_id) REFERENCES secretary (id)
 );
 
 CREATE TABLE room
@@ -49,9 +48,23 @@ CREATE TABLE room
     id        INT PRIMARY KEY AUTO_INCREMENT,
     address   TEXT NOT NULL,
     acreage   FLOAT,
-    studio_id INT
-#     FOREIGN KEY (studio_id) REFERENCES research_studio (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    studio_id INT,
+
+    FOREIGN KEY (studio_id) REFERENCES research_studio (id)
+);
+
+
+CREATE TABLE researcher
+(
+    id                 INT PRIMARY KEY AUTO_INCREMENT,
+    name               TEXT           NOT NULL,
+    gender             ENUM ('男','女') NOT NULL,
+    title              TEXT,
+    age                INT,
+    research_direction TEXT,
+    studio_id          INT,
+
+    FOREIGN KEY (studio_id) REFERENCES research_studio (id)
 );
 
 CREATE TABLE project
@@ -62,9 +75,9 @@ CREATE TABLE project
     research_content TEXT,
     fund             TEXT,
     start_time       TEXT,
-    finish_time      TEXT
-#     FOREIGN KEY (principal_id) REFERENCES research_studio (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    finish_time      TEXT,
+
+    FOREIGN KEY (principal_id) REFERENCES researcher (id)
 );
 
 CREATE TABLE sub_topic
@@ -74,27 +87,12 @@ CREATE TABLE sub_topic
     fund         TEXT,
     tech_index   TEXT,
     principal_id INT,
-    project_id   INT
-#     FOREIGN KEY (principal_id) REFERENCES research_studio (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (project_id) REFERENCES project (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    project_id   INT,
+
+    FOREIGN KEY (principal_id) REFERENCES researcher (id),
+    FOREIGN KEY (project_id) REFERENCES project (id)
 );
 
-CREATE TABLE researcher
-(
-    id                 INT PRIMARY KEY AUTO_INCREMENT,
-    name               TEXT           NOT NULL,
-    gender             ENUM ('男','女') NOT NULL,
-    title              TEXT,
-    age                INT,
-    research_direction TEXT,
-    studio_id          INT
-#     FOREIGN KEY (studio_id) REFERENCES research_studio (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (sub_topic_id) REFERENCES sub_topic (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
-);
 
 CREATE TABLE achievement
 (
@@ -103,9 +101,9 @@ CREATE TABLE achievement
     time       TEXT,
     rank_id    INT,
     type       ENUM ('专利：发明','专利：实用新型','专利：外观','论文','软件著作权'),
-    project_id INT
-#     FOREIGN KEY (project_id) REFERENCES project (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    project_id INT,
+
+    FOREIGN KEY (project_id) REFERENCES project (id)
 );
 
 CREATE TABLE cooperator
@@ -128,11 +126,10 @@ CREATE TABLE contribute_to
 (
     id             INT PRIMARY KEY AUTO_INCREMENT,
     researcher_id  INT NOT NULL,
-    achievement_id INT NOT NULL
-#     FOREIGN KEY (researcher_id) REFERENCES researcher (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (achievement_id) REFERENCES achievement (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    achievement_id INT NOT NULL,
+
+    FOREIGN KEY (researcher_id) REFERENCES researcher (id),
+    FOREIGN KEY (achievement_id) REFERENCES achievement (id)
 );
 
 CREATE TABLE join_project
@@ -143,11 +140,9 @@ CREATE TABLE join_project
     sub_topic_id  INT NOT NULL,
     join_time     TEXT,
     workload      TEXT,
-    fund          TEXT
-#     FOREIGN KEY (researcher_id) REFERENCES researcher (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (project_id) REFERENCES project (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    fund          TEXT,
+    FOREIGN KEY (researcher_id) REFERENCES researcher (id),
+    FOREIGN KEY (project_id) REFERENCES project (id)
 );
 
 CREATE TABLE with_other
@@ -155,11 +150,10 @@ CREATE TABLE with_other
     id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     project_id    INT NOT NULL,
-    type          ENUM ('合作方','委托方','质量监测方')
-#     FOREIGN KEY (cooperator_id) REFERENCES cooperator (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (project_id) REFERENCES project (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    type          ENUM ('合作方','委托方','质量监测方'),
+
+    FOREIGN KEY (cooperator_id) REFERENCES cooperator (id),
+    FOREIGN KEY (project_id) REFERENCES project (id)
 );
 
 CREATE TABLE per_coo
@@ -167,11 +161,10 @@ CREATE TABLE per_coo
     id            INT PRIMARY KEY AUTO_INCREMENT,
     cooperator_id INT NOT NULL,
     person_id     INT NOT NULL,
-    type          ENUM ('联系人','负责人')
-#     FOREIGN KEY (cooperator_id) REFERENCES cooperator (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT,
-#     FOREIGN KEY (person_id) REFERENCES person (id)
-#         ON DELETE RESTRICT ON UPDATE RESTRICT
+    type          ENUM ('联系人','负责人'),
+
+    FOREIGN KEY (cooperator_id) REFERENCES cooperator (id),
+    FOREIGN KEY (person_id) REFERENCES person (id)
 );
 
 CREATE TABLE user
