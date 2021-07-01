@@ -177,7 +177,7 @@ CREATE TABLE per_coo
 CREATE TABLE user
 (
     id       INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL UNIQUE,
     password TEXT         NOT NULL
 );
 

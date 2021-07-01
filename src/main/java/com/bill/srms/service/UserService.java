@@ -15,4 +15,16 @@ public class UserService
 		if (user.getUsername()==null||user.getPassword()==null) return false;
 		return userMapper.selectOne(user)!=null;
 	}
+
+	public boolean add(User user){
+		return userMapper.insert(user)==1;
+	}
+
+	public boolean update(User user){
+		return userMapper.updateByUsername(user)==1;
+	}
+
+	public User getByUsername(String username){
+		return userMapper.selectByUsername(username);
+	}
 }

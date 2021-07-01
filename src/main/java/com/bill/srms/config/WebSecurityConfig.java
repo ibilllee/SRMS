@@ -27,17 +27,22 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter
 	}
 
 	public void addInterceptors(InterceptorRegistry registry) {
-//		InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
-//
-//		// 排除配置
-//		addInterceptor.excludePathPatterns("/error");
-//		addInterceptor.excludePathPatterns("/login.html");
-//		addInterceptor.excludePathPatterns("/user/login**");
-//		addInterceptor.excludePathPatterns("/css/**");
-//		addInterceptor.excludePathPatterns("/js/**");
-//
-//		// 拦截配置
-//		addInterceptor.addPathPatterns("/**");
+		InterceptorRegistration addInterceptor = registry.addInterceptor(getSecurityInterceptor());
+
+		// 排除配置
+		addInterceptor.excludePathPatterns("/error");
+		addInterceptor.excludePathPatterns("/login.html");
+		addInterceptor.excludePathPatterns("/regist.html");
+		addInterceptor.excludePathPatterns("/user/login**");
+		addInterceptor.excludePathPatterns("/user/checkIfUsernameExist");
+		addInterceptor.excludePathPatterns("/user/add");
+		addInterceptor.excludePathPatterns("/css/**");
+		addInterceptor.excludePathPatterns("/js/**");
+		addInterceptor.excludePathPatterns("/fonts/**");
+		addInterceptor.excludePathPatterns("/pic/**");
+
+		// 拦截配置
+		addInterceptor.addPathPatterns("/**");
 	}
 
 	private class SecurityInterceptor extends HandlerInterceptorAdapter
