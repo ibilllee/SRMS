@@ -12,20 +12,20 @@ public class ResearcherService {
     @Autowired
     private ResearcherMapper researcherMapper;
 
-    public boolean add(Researcher researcher){
-        return researcherMapper.insertSelective(researcher)==1;
+    public boolean add(Researcher researcher) {
+        return researcherMapper.insertSelective(researcher) == 1;
     }
 
-    public List<Researcher> getAll(){
+    public List<Researcher> getAll() {
         return researcherMapper.selectAllWithStudio();
     }
 
-    public boolean delete(Integer id){
-        return researcherMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return researcherMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(Researcher researcher){
-        return researcherMapper.updateByPrimaryKeySelective(researcher)==1;
+    public boolean update(Researcher researcher) {
+        return researcherMapper.updateByPrimaryKeySelective(researcher) == 1;
     }
 
     public List<Researcher> getByStudioId(Integer studioId) {

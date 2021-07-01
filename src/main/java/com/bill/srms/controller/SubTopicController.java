@@ -15,14 +15,14 @@ import java.util.List;
 public class SubTopicController {
     @Autowired
     private SubTopicService subTopicService;
-    
+
     @PostMapping("/add")
-    public RespBean add(SubTopic subTopic){
-        boolean result ;
+    public RespBean add(SubTopic subTopic) {
+        boolean result;
         try {
-            result=subTopicService.add(subTopic);
-        } catch (Exception e){
-            return RespBean.unprocessable("添加失败"+e.getMessage(), subTopic);
+            result = subTopicService.add(subTopic);
+        } catch (Exception e) {
+            return RespBean.unprocessable("添加失败" + e.getMessage(), subTopic);
         }
         if (result)
             return RespBean.ok("添加成功", subTopic);
@@ -30,47 +30,47 @@ public class SubTopicController {
     }
 
     @GetMapping("/get/{id}")
-    public RespBean get(@PathVariable Integer id){
+    public RespBean get(@PathVariable Integer id) {
         SubTopic subTopic;
         try {
-            subTopic=subTopicService.getById(id);
-        }catch (Exception e){
+            subTopic = subTopicService.getById(id);
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败");
         }
-        if (subTopic!=null)
-            return RespBean.ok("获取成功",subTopic);
+        if (subTopic != null)
+            return RespBean.ok("获取成功", subTopic);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
+    public RespBean getAll() {
         HashMap<String, List<SubTopic>> result = new HashMap<>();
         try {
             result.put("subTopicList", subTopicService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getByProjectId/{projectId}")
-    private RespBean getByProjectId(@PathVariable Integer projectId){
+    private RespBean getByProjectId(@PathVariable Integer projectId) {
         HashMap<String, List<SubTopic>> result = new HashMap<>();
         try {
             result.put("subTopicList", subTopicService.getByProjectId(projectId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result=subTopicService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = subTopicService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -78,7 +78,7 @@ public class SubTopicController {
     }
 
     @PutMapping("/update")
-    public RespBean update(SubTopic subTopic){
+    public RespBean update(SubTopic subTopic) {
         boolean result;
         try {
             result = subTopicService.update(subTopic);

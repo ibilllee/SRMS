@@ -6,8 +6,7 @@ import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
-public interface StudioMapper extends Mapper<ResearchStudio>
-{
+public interface StudioMapper extends Mapper<ResearchStudio> {
     @Select(" SELECT ST.*,S.name as secretary_name,R.name as principal_name\n" +
             " FROM research_studio ST " +
             " LEFT JOIN secretary S " +

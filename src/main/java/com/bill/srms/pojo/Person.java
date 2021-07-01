@@ -13,6 +13,7 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private String name;
     private String mail;
     private String officePhone;
     private String mobilePhone;

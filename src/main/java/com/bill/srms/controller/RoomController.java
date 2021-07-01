@@ -29,34 +29,34 @@ public class RoomController {
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
+    public RespBean getAll() {
         HashMap<String, List<Room>> result = new HashMap<>();
         try {
             result.put("roomList", roomService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getByStudioId/{studioId}")
-    public RespBean getByStudioId(@PathVariable Integer studioId){
+    public RespBean getByStudioId(@PathVariable Integer studioId) {
         HashMap<String, List<Room>> result = new HashMap<>();
         try {
             result.put("roomList", roomService.getByStudioId(studioId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result=roomService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = roomService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -64,7 +64,7 @@ public class RoomController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Room room){
+    public RespBean update(Room room) {
         boolean result;
         try {
             result = roomService.update(room);

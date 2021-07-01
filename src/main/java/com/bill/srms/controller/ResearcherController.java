@@ -29,80 +29,80 @@ public class ResearcherController {
     }
 
     @GetMapping("/get/{id}")
-    public RespBean get(@PathVariable Integer id){
+    public RespBean get(@PathVariable Integer id) {
         Researcher researcher;
         try {
-            researcher=researcherService.getById(id);
-        }catch (Exception e){
+            researcher = researcherService.getById(id);
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败");
         }
-        if (researcher!=null)
-            return RespBean.ok("获取成功",researcher);
+        if (researcher != null)
+            return RespBean.ok("获取成功", researcher);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    private RespBean getAll(){
+    private RespBean getAll() {
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getByStudioId/{studioId}")
-    private RespBean getByStudioId(@PathVariable Integer studioId){
+    private RespBean getByStudioId(@PathVariable Integer studioId) {
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getByStudioId(studioId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getByProjectId/{projectId}")
-    private RespBean getByProjectId(@PathVariable Integer projectId){
+    private RespBean getByProjectId(@PathVariable Integer projectId) {
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getByProjectId(projectId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getBySubTopicId/{subTopicId}")
-    private RespBean getBySubTopicId(@PathVariable Integer subTopicId){
+    private RespBean getBySubTopicId(@PathVariable Integer subTopicId) {
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getBySubTopicId(subTopicId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @GetMapping("/getByAchievementId/{achievementId}")
-    private RespBean getByAchievementId(@PathVariable Integer achievementId){
+    private RespBean getByAchievementId(@PathVariable Integer achievementId) {
         HashMap<String, List<Researcher>> result = new HashMap<>();
         try {
             result.put("researcherList", researcherService.getByAchievementId(achievementId));
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result= researcherService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = researcherService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -110,7 +110,7 @@ public class ResearcherController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Researcher researcher){
+    public RespBean update(Researcher researcher) {
         boolean result;
         try {
             result = researcherService.update(researcher);

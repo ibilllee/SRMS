@@ -14,6 +14,8 @@ public class WithOther {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer projectId;
+    private String projectName;
     private Integer cooperatorId;
+    private String cooperatorName;
     private String type;
 }

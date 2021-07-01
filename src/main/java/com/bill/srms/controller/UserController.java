@@ -26,15 +26,15 @@ public class UserController {
 
     @PostMapping("/loginPost")
     @ResponseBody
-    public  RespBean loginPost(User user, HttpSession session,HttpServletResponse response) {
+    public RespBean loginPost(User user, HttpSession session, HttpServletResponse response) {
         System.out.println(System.getProperty("user.dir"));
-            if(userService.login(user)){
-                session.setAttribute(WebSecurityConfig.SESSION_KEY,user);
-                response.setHeader("Cache-Control","no-cache,no-store");
-                response.setHeader("Pragma","no-cache");
-                response.setDateHeader ("Expires", -1);
-                return RespBean.ok("登陆成功");
-            }
+        if (userService.login(user)) {
+            session.setAttribute(WebSecurityConfig.SESSION_KEY, user);
+            response.setHeader("Cache-Control", "no-cache,no-store");
+            response.setHeader("Pragma", "no-cache");
+            response.setDateHeader("Expires", -1);
+            return RespBean.ok("登陆成功");
+        }
         return RespBean.unprocessable("登录失败，用户名或密码错误");
     }
 
@@ -47,13 +47,13 @@ public class UserController {
 
     @PostMapping("/add")
     @ResponseBody
-    public RespBean add(User user){
+    public RespBean add(User user) {
         System.out.println(user);
-        boolean result ;
+        boolean result;
         try {
-            result=userService.add(user);
-        } catch (Exception e){
-            return RespBean.unprocessable("注册失败"+e.getMessage(), user);
+            result = userService.add(user);
+        } catch (Exception e) {
+            return RespBean.unprocessable("注册失败" + e.getMessage(), user);
         }
         if (result)
             return RespBean.ok("注册成功", user);
@@ -62,7 +62,7 @@ public class UserController {
 
     @PutMapping("/update")
     @ResponseBody
-    public RespBean update(User user){
+    public RespBean update(User user) {
         boolean result;
         try {
             result = userService.update(user);
@@ -76,10 +76,10 @@ public class UserController {
 
     @GetMapping("/checkIfUsernameExist")
     @ResponseBody
-    public RespBean checkIdIfExist(String username){
+    public RespBean checkIdIfExist(String username) {
         boolean result;
         try {
-            result = userService.getByUsername(username)==null;
+            result = userService.getByUsername(username) == null;
         } catch (Exception e) {
             return RespBean.unprocessable("查询失败" + e.getMessage());
         }

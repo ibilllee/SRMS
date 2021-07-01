@@ -29,36 +29,36 @@ public class CooperatorController {
     }
 
     @GetMapping("/get/{id}")
-    public RespBean get(@PathVariable Integer id){
+    public RespBean get(@PathVariable Integer id) {
         Cooperator cooperator;
         try {
-            cooperator=cooperatorService.getById(id);
-        }catch (Exception e){
+            cooperator = cooperatorService.getById(id);
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败");
         }
-        if (cooperator!=null)
-            return RespBean.ok("获取成功",cooperator);
+        if (cooperator != null)
+            return RespBean.ok("获取成功", cooperator);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    private RespBean getAll(){
+    private RespBean getAll() {
         HashMap<String, List<Cooperator>> result = new HashMap<>();
         try {
             result.put("cooperatorList", cooperatorService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result=cooperatorService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = cooperatorService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -66,7 +66,7 @@ public class CooperatorController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Cooperator cooperator){
+    public RespBean update(Cooperator cooperator) {
         boolean result;
         try {
             result = cooperatorService.update(cooperator);

@@ -182,8 +182,17 @@ CREATE TABLE user
 );
 
 # 保证子课题的所属项目一致
-CREATE TRIGGER sub_ins_check
+CREATE TRIGGER sub_ins_check1
     BEFORE INSERT
+    ON join_project
+    FOR EACH ROW
+BEGIN
+    IF new.project_id NOT IN (SELECT project_id FROM sub_topic WHERE id = new.sub_topic_id) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project of this sub_topic is wrong';
+    END IF;
+END;
+CREATE TRIGGER sub_ins_check2
+    BEFORE UPDATE
     ON join_project
     FOR EACH ROW
 BEGIN
@@ -193,7 +202,7 @@ BEGIN
 END;
 
 # 保证只有唯一委托方或质量监测方
-CREATE TRIGGER with_other_ins_check
+CREATE TRIGGER with_other_ins_check1
     BEFORE INSERT
     ON with_other
     FOR EACH ROW
@@ -203,16 +212,37 @@ BEGIN
         SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project cooperator has already exist';
     END IF;
 END;
+CREATE TRIGGER with_other_ins_check2
+    BEFORE UPDATE
+    ON with_other
+    FOR EACH ROW
+BEGIN
+    IF (new.type = '质量监测方' OR new.type = '委托方') AND
+       EXISTS(SELECT * FROM with_other WHERE project_id = new.project_id AND type = new.type) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The project cooperator has already exist';
+    END IF;
+END;
+
 
 #保证一个相关单位只有一个负责人
-CREATE TRIGGER per_coo_ins_check
+CREATE TRIGGER per_coo_ins_check1
     BEFORE INSERT
     ON per_coo
     FOR EACH ROW
 BEGIN
     IF (new.type = '负责人' AND
         EXISTS(SELECT * FROM per_coo WHERE cooperator_id = new.cooperator_id AND type = new.type)) THEN
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The cooperator\'s  pricipal has already exist';
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The cooperator pricipal has already exist';
+    END IF;
+end;
+CREATE TRIGGER per_coo_ins_check2
+    BEFORE UPDATE
+    ON per_coo
+    FOR EACH ROW
+BEGIN
+    IF (new.type = '负责人' AND
+        EXISTS(SELECT * FROM per_coo WHERE cooperator_id = new.cooperator_id AND type = new.type)) THEN
+        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'The cooperator pricipal has already exist';
     END IF;
 end;
 

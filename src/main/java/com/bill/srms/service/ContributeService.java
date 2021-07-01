@@ -12,23 +12,23 @@ public class ContributeService {
     @Autowired
     private ContributeMapper contributeMapper;
 
-    public boolean add(Contribute contribute){
-        return contributeMapper.insertSelective(contribute)==1;
+    public boolean add(Contribute contribute) {
+        return contributeMapper.insertSelective(contribute) == 1;
     }
 
-    public Contribute getById(Integer id){
+    public Contribute getById(Integer id) {
         return contributeMapper.selectById(id);
     }
 
-    public List<Contribute> getAll(){
+    public List<Contribute> getAll() {
         return contributeMapper.selectAllWithAchievementAndResearcher();
     }
 
-    public boolean delete(Integer id){
-        return contributeMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return contributeMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(Contribute contribute){
-        return contributeMapper.updateByPrimaryKeySelective(contribute)==1;
+    public boolean update(Contribute contribute) {
+        return contributeMapper.updateByPrimaryKeySelective(contribute) == 1;
     }
 }

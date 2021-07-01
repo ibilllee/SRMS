@@ -1,7 +1,6 @@
 package com.bill.srms.mapper;
 
 import com.bill.srms.pojo.Person;
-import com.bill.srms.pojo.Person;
 import org.apache.ibatis.annotations.Select;
 import tk.mybatis.mapper.common.Mapper;
 

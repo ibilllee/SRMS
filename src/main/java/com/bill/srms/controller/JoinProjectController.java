@@ -78,6 +78,11 @@ public class JoinProjectController {
         try {
             result = joinProjectService.update(joinProject);
         } catch (Exception e) {
+            if (e instanceof UncategorizedSQLException) {
+                UncategorizedSQLException exception = (UncategorizedSQLException) e;
+                e.getMessage().contains("The project of this sub_topic is wrong");
+                return RespBean.unprocessable("子课题不属于该项目", joinProject);
+            }
             return RespBean.unprocessable("修改失败" + e.getMessage());
         }
         if (result)

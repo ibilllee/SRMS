@@ -5,8 +5,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import tk.mybatis.mapper.common.Mapper;
 
-public interface UserMapper extends Mapper<User>
-{
+public interface UserMapper extends Mapper<User> {
     @Update(" UPDATE user SET password = #{password} WHERE username = #{username} ")
     Integer updateByUsername(User user);
 

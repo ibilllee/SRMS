@@ -12,23 +12,23 @@ public class PerCooService {
     @Autowired
     private PerCooMapper perCooMapper;
 
-    public boolean add(PerCoo perCoo){
-        return perCooMapper.insertSelective(perCoo)==1;
+    public boolean add(PerCoo perCoo) {
+        return perCooMapper.insertSelective(perCoo) == 1;
     }
 
-    public PerCoo getById(Integer id){
+    public PerCoo getById(Integer id) {
         return perCooMapper.selectById(id);
     }
 
-    public List<PerCoo> getAll(){
+    public List<PerCoo> getAll() {
         return perCooMapper.selectAllWithPersonAndCooperator();
     }
 
-    public boolean delete(Integer id){
-        return perCooMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return perCooMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(PerCoo perCoo){
-        return perCooMapper.updateByPrimaryKeySelective(perCoo)==1;
+    public boolean update(PerCoo perCoo) {
+        return perCooMapper.updateByPrimaryKeySelective(perCoo) == 1;
     }
 }

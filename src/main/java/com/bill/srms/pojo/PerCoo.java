@@ -14,6 +14,8 @@ public class PerCoo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer cooperatorId;
+    private String cooperatorName;
     private Integer personId;
+    private String personName;
     private String type;
 }

@@ -17,12 +17,12 @@ public class ProjectController {
     private ProjectService projectService;
 
     @PostMapping("/add")
-    public RespBean add(Project project){
-        boolean result ;
+    public RespBean add(Project project) {
+        boolean result;
         try {
-            result=projectService.add(project);
-        } catch (Exception e){
-            return RespBean.unprocessable("添加失败"+e.getMessage(), project);
+            result = projectService.add(project);
+        } catch (Exception e) {
+            return RespBean.unprocessable("添加失败" + e.getMessage(), project);
         }
         if (result)
             return RespBean.ok("添加成功", project);
@@ -30,36 +30,36 @@ public class ProjectController {
     }
 
     @GetMapping("/get/{id}")
-    public RespBean get(@PathVariable Integer id){
+    public RespBean get(@PathVariable Integer id) {
         Project project;
         try {
-            project=projectService.getById(id);
-        }catch (Exception e){
+            project = projectService.getById(id);
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败");
         }
-        if (project!=null)
-            return RespBean.ok("获取成功",project);
+        if (project != null)
+            return RespBean.ok("获取成功", project);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
+    public RespBean getAll() {
         HashMap<String, List<Project>> result = new HashMap<>();
         try {
             result.put("projectList", projectService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result=projectService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = projectService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -67,7 +67,7 @@ public class ProjectController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Project project){
+    public RespBean update(Project project) {
         boolean result;
         try {
             result = projectService.update(project);

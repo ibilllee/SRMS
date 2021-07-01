@@ -16,8 +16,6 @@ import java.io.IOException;
 
 @Configuration
 public class JsonConfig {
-
-
     @Bean
     @Primary
     @ConditionalOnMissingBean(ObjectMapper.class)

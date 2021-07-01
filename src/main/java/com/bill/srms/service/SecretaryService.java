@@ -12,22 +12,21 @@ public class SecretaryService {
     @Autowired
     private SecretaryMapper secretaryMapper;
 
-    public boolean add(Secretary secretary){
-        return secretaryMapper.insertSelective(secretary)==1;
+    public boolean add(Secretary secretary) {
+        return secretaryMapper.insertSelective(secretary) == 1;
     }
 
-    public List<Secretary> getAll(){
+    public List<Secretary> getAll() {
         return secretaryMapper.selectAll();
     }
 
-    public boolean delete(Integer id){
-        return secretaryMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return secretaryMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(Secretary secretary){
-        return secretaryMapper.updateByPrimaryKeySelective(secretary)==1;
+    public boolean update(Secretary secretary) {
+        return secretaryMapper.updateByPrimaryKeySelective(secretary) == 1;
     }
-
 
     public Secretary getById(Integer id) {
         return secretaryMapper.selectById(id);

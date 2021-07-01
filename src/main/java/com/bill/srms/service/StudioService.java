@@ -8,28 +8,27 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class StudioService
-{
-	@Autowired
-	private StudioMapper studioMapper;
+public class StudioService {
+    @Autowired
+    private StudioMapper studioMapper;
 
-	public boolean add(ResearchStudio studio){
-		return studioMapper.insertSelective(studio)==1;
-	}
+    public boolean add(ResearchStudio studio) {
+        return studioMapper.insertSelective(studio) == 1;
+    }
 
-	public ResearchStudio getById(Integer id){
-		return studioMapper.selectById(id);
-	}
+    public ResearchStudio getById(Integer id) {
+        return studioMapper.selectById(id);
+    }
 
-	public List<ResearchStudio> getAll(){
-		return studioMapper.selectAllWithSecretaryAndResearcher();
-	}
+    public List<ResearchStudio> getAll() {
+        return studioMapper.selectAllWithSecretaryAndResearcher();
+    }
 
-	public boolean delete(Integer id){
-		return studioMapper.deleteByPrimaryKey(id)==1;
-	}
+    public boolean delete(Integer id) {
+        return studioMapper.deleteByPrimaryKey(id) == 1;
+    }
 
-	public boolean update(ResearchStudio studio){
-		return studioMapper.updateByPrimaryKeySelective(studio)==1;
-	}
+    public boolean update(ResearchStudio studio) {
+        return studioMapper.updateByPrimaryKeySelective(studio) == 1;
+    }
 }

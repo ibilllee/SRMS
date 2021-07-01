@@ -16,12 +16,12 @@ public class ContributeController {
     private ContributeService contributeService;
 
     @PostMapping("/add")
-    public RespBean add(Contribute contribute){
-        boolean result ;
+    public RespBean add(Contribute contribute) {
+        boolean result;
         try {
-            result=contributeService.add(contribute);
-        } catch (Exception e){
-            return RespBean.unprocessable("添加失败"+e.getMessage(), contribute);
+            result = contributeService.add(contribute);
+        } catch (Exception e) {
+            return RespBean.unprocessable("添加失败" + e.getMessage(), contribute);
         }
         if (result)
             return RespBean.ok("添加成功", contribute);
@@ -29,36 +29,36 @@ public class ContributeController {
     }
 
     @GetMapping("/get/{id}")
-    public RespBean get(@PathVariable Integer id){
+    public RespBean get(@PathVariable Integer id) {
         Contribute contribute;
         try {
-            contribute=contributeService.getById(id);
-        }catch (Exception e){
+            contribute = contributeService.getById(id);
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败");
         }
-        if (contribute!=null)
-            return RespBean.ok("获取成功",contribute);
+        if (contribute != null)
+            return RespBean.ok("获取成功", contribute);
         return RespBean.unprocessable("不存在");
     }
 
     @GetMapping("/getAll")
-    public RespBean getAll(){
+    public RespBean getAll() {
         HashMap<String, List<Contribute>> result = new HashMap<>();
         try {
             result.put("contributeList", contributeService.getAll());
-        }catch (Exception e) {
+        } catch (Exception e) {
             return RespBean.unprocessable("获取失败" + e.getMessage());
         }
-        return RespBean.ok("获取成功",result);
+        return RespBean.ok("获取成功", result);
     }
 
     @DeleteMapping("/delete/{id}")
-    public RespBean delete(@PathVariable Integer id){
+    public RespBean delete(@PathVariable Integer id) {
         boolean result;
         try {
-            result=contributeService.delete(id);
-        }catch (Exception e){
-            return RespBean.unprocessable("删除失败"+e.getMessage());
+            result = contributeService.delete(id);
+        } catch (Exception e) {
+            return RespBean.unprocessable("删除失败" + e.getMessage());
         }
         if (result)
             return RespBean.ok("删除成功");
@@ -66,7 +66,7 @@ public class ContributeController {
     }
 
     @PutMapping("/update")
-    public RespBean update(Contribute contribute){
+    public RespBean update(Contribute contribute) {
         boolean result;
         try {
             result = contributeService.update(contribute);

@@ -11,25 +11,25 @@ import java.util.List;
 public class SubTopicService {
     @Autowired
     private SubTopicMapper subTopicMapper;
-    
-    public boolean add(SubTopic subTopic){
-        return subTopicMapper.insertSelective(subTopic)==1;
+
+    public boolean add(SubTopic subTopic) {
+        return subTopicMapper.insertSelective(subTopic) == 1;
     }
 
-    public SubTopic getById(Integer id){
+    public SubTopic getById(Integer id) {
         return subTopicMapper.selectById(id);
     }
 
-    public List<SubTopic> getAll(){
+    public List<SubTopic> getAll() {
         return subTopicMapper.selectAllWithProjectAndResearcher();
     }
 
-    public boolean delete(Integer id){
-        return subTopicMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return subTopicMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(SubTopic subTopic){
-        return subTopicMapper.updateByPrimaryKeySelective(subTopic)==1;
+    public boolean update(SubTopic subTopic) {
+        return subTopicMapper.updateByPrimaryKeySelective(subTopic) == 1;
     }
 
     public List<SubTopic> getByProjectId(Integer projectId) {

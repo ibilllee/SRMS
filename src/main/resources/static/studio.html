@@ -1,373 +1,381 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>工作室管理</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-        <script src="js/jquery-3.3.1.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/infoBlock.js"></script>
-        <script type="text/javascript">
+<head>
+    <meta charset="UTF-8">
+    <title>工作室管理</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/infoBlock.js"></script>
+    <script type="text/javascript">
 
-            $(function () {
-                $.get("header.html", function (data) {
-                    $("#header").html(data);
-                });
+        $(function () {
+            $.get("header.html", function (data) {
+                $("#header").html(data);
+            });
 
-                // 失焦检查 -> 编辑表单中要检查的元素
-                $("#principalId").blur(function () {
-                    var principalId = $(this).val();
-                    $.get("researcher/get/" + principalId, function (result) {
-                        if (result.metaInfo.status === 200) {
-                            displayInfo($("#successFind1"), "您填入了: " + result.data.name);
-                        } else if (result.metaInfo.msg === "不存在") {
-                            displayInfo($("#successFind1"), "该编号对应的科研负责人不存在");
-                        } else {
-                            displayInfo($("#successFind1"), "验证负责人失败");
-                        }
-                    })
-                });
-                $("#closeModal").click(function () {
-                    undisplay($("#successFind1"));
-                })
-                $("#secretaryId").blur(function () {
-                    var secretaryId = $(this).val();
-                    $.get("secretary/get/" + secretaryId, function (result) {
-                        if (result.metaInfo.status === 200) {
-                            displayInfo($("#successFind2"), "您填入了: " + result.data.name);
-                        } else if (result.metaInfo.msg === "不存在") {
-                            displayInfo($("#successFind2"), "该编号对应的秘书不存在");
-                        } else {
-                            displayInfo($("#successFind2"), "验证负责人失败");
-                        }
-                    })
-                });
-                $("#closeModal").click(function () {
-                    undisplay($("#successFind2"));
-                })
-
-                //获取结果列表
-                $.get("studio/getAll", function (result) {
-                    var studioList = result.data.studioList;
-                    for (i = 0; i < studioList.length; i++) {
-                        $("#table").append(
-                            "<tr class='col' name='" + studioList[i].id + "'>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].id + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].name + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].researchDirection + "</td>" +
-                            "<td style='vertical-align:middle;display: none'>" + studioList[i].principalId + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].principalName + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].pstartTime + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].pterm + "</td>" +
-                            "<td style='vertical-align:middle;display: none'>" + studioList[i].secretaryId + "</td>" +
-                            "<td style='vertical-align:middle'>" + studioList[i].secretaryName + "</td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default mbr' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default loc' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-open'></span></a></td>" +
-                            "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-trash'></span></a></td>" +
-                            "</tr>"
-                        )
+            // 失焦检查 -> 编辑表单中要检查的元素
+            $("#principalId").blur(function () {
+                var principalId = $(this).val();
+                $.get("researcher/get/" + principalId, function (result) {
+                    if (result.metaInfo.status === 200) {
+                        displayInfo($("#successFind1"), "您填入了: " + result.data.name);
+                    } else if (result.metaInfo.msg === "不存在") {
+                        displayInfo($("#successFind1"), "该编号对应的科研负责人不存在");
+                    } else {
+                        displayInfo($("#successFind1"), "验证负责人失败");
                     }
+                })
+            });
+            $("#closeModal").click(function () {
+                undisplay($("#successFind1"));
+            })
+            $("#secretaryId").blur(function () {
+                var secretaryId = $(this).val();
+                $.get("secretary/get/" + secretaryId, function (result) {
+                    if (result.metaInfo.status === 200) {
+                        displayInfo($("#successFind2"), "您填入了: " + result.data.name);
+                    } else if (result.metaInfo.msg === "不存在") {
+                        displayInfo($("#successFind2"), "该编号对应的秘书不存在");
+                    } else {
+                        displayInfo($("#successFind2"), "验证负责人失败");
+                    }
+                })
+            });
+            $("#closeModal").click(function () {
+                undisplay($("#successFind2"));
+            })
 
-                    //新增
-                    $("#addBtn").click(function () {
-                        $("#myModal").modal("show");
-                        $("#id").attr("placeholder", "自动生成");
-                        $("#name").attr("value", "");
-                        $("#researchDirection").attr("value", "");
-                        $("#principalId").attr("value", "");
-                        $("#pStartTime").attr("value", "");
-                        $("#pTerm").attr("value", "");
-                        $("#secretaryId").attr("value", "");
+            //获取结果列表
+            $.get("studio/getAll", function (result) {
+                var studioList = result.data.studioList;
+                for (i = 0; i < studioList.length; i++) {
+                    $("#table").append(
+                        "<tr class='col' name='" + studioList[i].id + "'>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].id + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].name + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].researchDirection + "</td>" +
+                        "<td style='vertical-align:middle;display: none'>" + studioList[i].principalId + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].principalName + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].pstartTime + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].pterm + "</td>" +
+                        "<td style='vertical-align:middle;display: none'>" + studioList[i].secretaryId + "</td>" +
+                        "<td style='vertical-align:middle'>" + studioList[i].secretaryName + "</td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default mbr' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default loc' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-th-list'></span></a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default upd' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-open'></span></a></td>" +
+                        "<td style='vertical-align:middle'><a class='btn btn-sm btn-default del' name='" + studioList[i].id + "'><span class='glyphicon glyphicon-trash'></span></a></td>" +
+                        "</tr>"
+                    )
+                }
 
-                        $("#submitBtn").click(function () {
-                            if (confirm("新增工作室？")) {
-                                $.post("studio/add", $("#changeForm").serialize(), function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("添加成功");
-                                        location.href = "studio.html";
-                                    } else {
-                                        alert("添加失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "studio.html";
-                                    }
-                                });
-                            }
-                        });
-                    });
+                //新增
+                $("#addBtn").click(function () {
+                    $("#myModal").modal("show");
+                    $("#id").attr("placeholder", "自动生成");
+                    $("#name").attr("value", "");
+                    $("#researchDirection").attr("value", "");
+                    $("#principalId").attr("value", "");
+                    $("#pStartTime").attr("value", "");
+                    $("#pTerm").attr("value", "");
+                    $("#secretaryId").attr("value", "");
 
-                    // 查询成员
-                    $("a.mbr").click(function () {
-                        var id = $(this).attr("name");
-                        $("#table2").html("<tr class='success' style='height:30px'>\n" +
-                            "<th style='vertical-align:middle;'>编号</th>\n" +
-                            "<th style='vertical-align:middle'>姓名</th>\n" +
-                            "<th style='vertical-align:middle'>性别</th>\n" +
-                            "<th style='vertical-align:middle'>职称</th>\n" +
-                            "<th style='vertical-align:middle'>年龄</th>\n" +
-                            "<th style='vertical-align:middle'>研究方向</th>\n" +
-                            "<th style='vertical-align:middle'>工作室编号</th>\n" +
-                            "<th style='vertical-align:middle'>工作室名称</th>\n" +
-                            "</tr>");
-
-                        $("#myModal2").modal("show");
-                        $.get("researcher/getByStudioId/" + id, function (result) {
-                            var researcherList = result.data.researcherList;
-                            for (i = 0; i < researcherList.length; i++) {
-                                $("#table2").append(
-                                    "<tr class='col' style='height:30px' name='" + researcherList[i].id + "'>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].id + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].name + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].gender + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].title + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].age + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].researchDirection + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].studioId + "</td>" +
-                                    "<td style='vertical-align:middle'>" + researcherList[i].studioName + "</td>" +
-                                    "</tr>"
-                                )
-                            }
-                        })
-                    })
-
-                    // 查询地点
-                    $("a.loc").click(function () {
-                        var id = $(this).attr("name");
-                        $("#table2").html("<tr class='success' style='height:30px'>\n" +
-                            "<th style='vertical-align:middle'>编号</th>" +
-                            "<th style='vertical-align:middle'>地址</th>" +
-                            "<th style='vertical-align:middle'>面积</th>" +
-                            "<th style='vertical-align:middle'>工作室序号</th>" +
-                            "<th style='vertical-align:middle'>工作室名称</th>" +
-                            "</tr>");
-
-                        $("#myModal2").modal("show");
-                        $.get("room/getByStudioId/" + id, function (result) {
-                            var roomList = result.data.roomList;
-                            for (i = 0; i < roomList.length; i++) {
-                                $("#table2").append(
-                                    "<tr class='col' style='height:30px' name='" + roomList[i].id + "'>" +
-                                    "<td style='vertical-align:middle'>" + roomList[i].id + "</td>" +
-                                    "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
-                                    "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
-                                    "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
-                                    "<td style='vertical-align:middle'>" + roomList[i].studioName + "</td>" +
-                                    "</tr>"
-                                )
-                            }
-                        });
-                    })
-
-                    //修改
-                    $("a.upd").click(function () {
-                        var id = $(this).attr("name");
-
-                        //查询表格，属性回填
-                        var father = $("[name='" + id + "']");
-                        var name = father.children().eq(1).html();
-                        var researchDirection = father.children().eq(2).html();
-                        var principalId = father.children().eq(3).html();
-                        var pStartTime = father.children().eq(5).html();
-                        var pTerm = father.children().eq(6).html();
-                        var secretaryId = father.children().eq(7).html();
-
-                        $("#id").attr("placeholder", id);
-                        $("#name").attr("value", name);
-                        $("#researchDirection").attr("value", researchDirection);
-                        $("#principalId").attr("value", principalId);
-                        $("#pStartTime").attr("value", pStartTime);
-                        $("#pTerm").attr("value", pTerm);
-                        $("#secretaryId").attr("value", secretaryId);
-
-                        $("#myModal").modal("show");
-                        $("#submitBtn").click(function () {
-                            if (confirm("修改编号为" + id + "的工作室信息？")) {
-                                $("#id").removeAttr("disabled");
-                                $("#id").attr("value", id);
-                                $.ajax({
-                                    type: 'PUT',
-                                    url: 'studio/update',
-                                    data: $("#changeForm").serialize(),
-                                    success: function (result) {
-                                        if (result.metaInfo.status === 200) {
-                                            alert("修改成功");
-                                            location.href = "studio.html";
-                                        } else {
-                                            alert("修改失败\n信息：" + result.metaInfo.msg);
-                                            location.href = "studio.html";
-                                        }
-                                    },
-                                    error: function (result) {
-                                        alert("修改失败");
-                                        location.href = "studio.html";
-                                    }
-                                })
-                            }
-                        });
-                    });
-
-
-                    //删除
-                    $("a.del").click(function () {
-                        var id = $(this).attr("name");
-                        if (confirm("删除编号为" + id + "的工作室？")) {
-                            $.ajax({
-                                type: 'DELETE',
-                                url: 'studio/delete/' + id,
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("删除成功");
-                                        location.href = "studio.html";
-                                    } else {
-                                        alert("删除失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "studio.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("删除失败");
+                    $("#submitBtn").click(function () {
+                        if (confirm("新增工作室？")) {
+                            $.post("studio/add", $("#changeForm").serialize(), function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("添加成功");
+                                    location.href = "studio.html";
+                                } else {
+                                    alert("添加失败\n信息：" + result.metaInfo.msg);
                                     location.href = "studio.html";
                                 }
                             });
                         }
                     });
                 });
-            })
+
+                // 查询成员
+                $("a.mbr").click(function () {
+                    var id = $(this).attr("name");
+                    $("#table2").html("<tr class='success' style='height:30px'>\n" +
+                        "<th style='vertical-align:middle;'>编号</th>\n" +
+                        "<th style='vertical-align:middle'>姓名</th>\n" +
+                        "<th style='vertical-align:middle'>性别</th>\n" +
+                        "<th style='vertical-align:middle'>职称</th>\n" +
+                        "<th style='vertical-align:middle'>年龄</th>\n" +
+                        "<th style='vertical-align:middle'>研究方向</th>\n" +
+                        "<th style='vertical-align:middle'>工作室编号</th>\n" +
+                        "<th style='vertical-align:middle'>工作室名称</th>\n" +
+                        "</tr>");
+
+                    $("#myModal2").modal("show");
+                    $.get("researcher/getByStudioId/" + id, function (result) {
+                        var researcherList = result.data.researcherList;
+                        for (i = 0; i < researcherList.length; i++) {
+                            $("#table2").append(
+                                "<tr class='col' style='height:30px' name='" + researcherList[i].id + "'>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].id + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].name + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].gender + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].title + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].age + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].researchDirection + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].studioId + "</td>" +
+                                "<td style='vertical-align:middle'>" + researcherList[i].studioName + "</td>" +
+                                "</tr>"
+                            )
+                        }
+                    })
+                })
+
+                // 查询地点
+                $("a.loc").click(function () {
+                    var id = $(this).attr("name");
+                    $("#table2").html("<tr class='success' style='height:30px'>\n" +
+                        "<th style='vertical-align:middle'>编号</th>" +
+                        "<th style='vertical-align:middle'>地址</th>" +
+                        "<th style='vertical-align:middle'>面积</th>" +
+                        "<th style='vertical-align:middle'>工作室序号</th>" +
+                        "<th style='vertical-align:middle'>工作室名称</th>" +
+                        "</tr>");
+
+                    $("#myModal2").modal("show");
+                    $.get("room/getByStudioId/" + id, function (result) {
+                        var roomList = result.data.roomList;
+                        for (i = 0; i < roomList.length; i++) {
+                            $("#table2").append(
+                                "<tr class='col' style='height:30px' name='" + roomList[i].id + "'>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].id + "</td>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].address + "</td>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].acreage + "</td>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].studioId + "</td>" +
+                                "<td style='vertical-align:middle'>" + roomList[i].studioName + "</td>" +
+                                "</tr>"
+                            )
+                        }
+                    });
+                })
+
+                //修改
+                $("a.upd").click(function () {
+                    var id = $(this).attr("name");
+
+                    //查询表格，属性回填
+                    var father = $("[name='" + id + "']");
+                    var name = father.children().eq(1).html();
+                    var researchDirection = father.children().eq(2).html();
+                    var principalId = father.children().eq(3).html();
+                    var pStartTime = father.children().eq(5).html();
+                    var pTerm = father.children().eq(6).html();
+                    var secretaryId = father.children().eq(7).html();
+
+                    $("#id").attr("placeholder", id);
+                    $("#name").attr("value", name);
+                    $("#researchDirection").attr("value", researchDirection);
+                    $("#principalId").attr("value", principalId);
+                    $("#pStartTime").attr("value", pStartTime);
+                    $("#pTerm").attr("value", pTerm);
+                    $("#secretaryId").attr("value", secretaryId);
+
+                    $("#myModal").modal("show");
+                    $("#submitBtn").click(function () {
+                        if (confirm("修改编号为" + id + "的工作室信息？")) {
+                            $("#id").removeAttr("disabled");
+                            $("#id").attr("value", id);
+                            $.ajax({
+                                type: 'PUT',
+                                url: 'studio/update',
+                                data: $("#changeForm").serialize(),
+                                success: function (result) {
+                                    if (result.metaInfo.status === 200) {
+                                        alert("修改成功");
+                                        location.href = "studio.html";
+                                    } else {
+                                        alert("修改失败\n信息：" + result.metaInfo.msg);
+                                        location.href = "studio.html";
+                                    }
+                                },
+                                error: function (result) {
+                                    alert("修改失败");
+                                    location.href = "studio.html";
+                                }
+                            })
+                        }
+                    });
+                });
 
 
-        </script>
-        <style>
-            td, th {
-                text-align: center;
-                vertical-align: middle;
-            }
-        </style>
-    </head>
-    <body>
-        <div id="header"></div>
-        <div class="container-fluid">
-            <h3 style="text-align:center">工作室列表</h3>
-            <div class="row">
+                //删除
+                $("a.del").click(function () {
+                    var id = $(this).attr("name");
+                    if (confirm("删除编号为" + id + "的工作室？")) {
+                        $.ajax({
+                            type: 'DELETE',
+                            url: 'studio/delete/' + id,
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("删除成功");
+                                    location.href = "studio.html";
+                                } else {
+                                    alert("删除失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "studio.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("删除失败");
+                                location.href = "studio.html";
+                            }
+                        });
+                    }
+                });
+            });
+        })
 
-                <div class="hidden-xs col-sm-1"></div>
 
-                <div class="col-xs-12 col-sm-10 ">
+    </script>
+    <style>
+        td, th {
+            text-align: center;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+<div id="header"></div>
+<div class="container-fluid">
+    <h3 style="text-align:center">工作室列表</h3>
+    <div class="row">
+
+        <div class="hidden-xs col-sm-1"></div>
+
+        <div class="col-xs-12 col-sm-10 ">
+            <table border="1" class="table table-bordered table-hover"
+                   style="text-align: center;" id="table">
+                <tr class="success">
+                    <th style='vertical-align:middle'>编号</th>
+                    <th style='vertical-align:middle'>名称</th>
+                    <th style='vertical-align:middle'>研究方向</th>
+                    <th style='vertical-align:middle'>负责人</th>
+                    <th style='vertical-align:middle'>负责起始期</th>
+                    <th style='vertical-align:middle'>负责任期</th>
+                    <th style='vertical-align:middle'>秘书</th>
+                    <th style='vertical-align:middle'>成员</th>
+                    <th style='vertical-align:middle'>地点</th>
+                    <th style='vertical-align:middle'>更新</th>
+                    <th style='vertical-align:middle'>删除</th>
+                </tr>
+
+
+            </table>
+        </div>
+
+        <div class="col-xs-12">
+            <center>
+                <a class="btn btn btn-info" type="button" id="addBtn">
+                    <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加工作室</a>
+            </center>
+        </div>
+
+        <div class="col-xs-12" style="margin-bottom: 20px"></div>
+        <div class="col-xs-12">
+            <center>
+                <a href="room.html " class="btn" type="button">
+                    向工作室添加办公地点&nbsp;&nbsp;<span class="glyphicon glyphicon-menu-right"></span></a>
+            </center>
+        </div>
+        <div class="col-xs-12" style="margin-bottom: 35px"></div>
+    </div>
+</div>
+
+<!--模态框1-->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" id="myModalDialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑工作室</h4>
+            </div>
+            <div class="modal-body" id="windowContent">
+                <center>
+                    <form style="width: 400px" action="" id="changeForm" accept-charset="utf-8">
+                        <div class="form-group">
+                            <label>工作室编号：</label>
+                            <input type="text" name="id" class="form-control" id="id" disabled placeholder=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">名称</label>
+                            <input type="text" name="name" class="form-control" id="name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="researchDirection">研究方向</label>
+                            <input type="text" name="researchDirection" class="form-control"
+                                   id="researchDirection"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="secretaryId">秘书编号</label>
+                            <input type="text" name="secretaryId" class="form-control" id="secretaryId"/>
+                        </div>
+                        <div class="alert alert-info alert-dismissible" id="successFind2" role="alert"
+                             style="display: none"></div>
+
+                        <div class="form-group">
+                            <label for="principalId">负责人编号</label>
+                            <input type="text" name="principalId" class="form-control" id="principalId"/>
+                        </div>
+                        <div class="alert alert-info alert-dismissible" id="successFind1" role="alert"
+                             style="display: none"></div>
+                        <div class="form-group">
+                            <label for="pStartTime">负责起始期</label>
+                            <input type="text" name="pStartTime" class="form-control" id="pStartTime"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="pTerm">负责任期</label>
+                            <input type="text" name="pTerm" class="form-control" id="pTerm"/>
+                        </div>
+
+                        <div class="form-group" style="text-align: center;">
+                            <div class="btn btn btn-primary" type="button" id="submitBtn">
+                                <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;提交
+                            </div>
+                        </div>
+                    </form>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--模态框2-->
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" id="myModalDialog2" style="width: 80%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel2" style="text-align: center">详细信息</h4>
+            </div>
+            <div class="modal-body" id="windowContent2">
+                <center>
                     <table border="1" class="table table-bordered table-hover"
-                           style="text-align: center;" id="table">
-                        <tr class="success">
-                            <th style='vertical-align:middle'>编号</th>
-                            <th style='vertical-align:middle'>名称</th>
-                            <th style='vertical-align:middle'>研究方向</th>
-                            <th style='vertical-align:middle'>负责人</th>
-                            <th style='vertical-align:middle'>负责起始期</th>
-                            <th style='vertical-align:middle'>负责任期</th>
-                            <th style='vertical-align:middle'>秘书</th>
-                            <th style='vertical-align:middle'>成员</th>
-                            <th style='vertical-align:middle'>地点</th>
-                            <th style='vertical-align:middle'>更新</th>
-                            <th style='vertical-align:middle'>删除</th>
-                        </tr>
-
-
+                           style="text-align: center;" id="table2">
                     </table>
-                </div>
-
-                <div class="col-xs-12">
-                    <center>
-                        <a class="btn btn btn-info" type="button" id="addBtn">
-                            <span class="glyphicon glyphicon-plus-sign"></span>&nbsp;&nbsp;添加工作室</a>
-                    </center>
-                </div>
-                <div class="col-xs-12" style="margin-bottom: 35px"></div>
+                </center>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal2">
+                    <span class="glyphicon glyphicon-remove"></span> 关闭
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!--模态框1-->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" id="myModalDialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel" style="text-align: center">编辑工作室</h4>
-                    </div>
-                    <div class="modal-body" id="windowContent">
-                        <center>
-                            <form style="width: 400px" action="" id="changeForm" accept-charset="utf-8">
-                                <div class="form-group">
-                                    <label>工作室编号：</label>
-                                    <input type="text" name="id" class="form-control" id="id" disabled placeholder=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name">名称</label>
-                                    <input type="text" name="name" class="form-control" id="name"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="researchDirection">研究方向</label>
-                                    <input type="text" name="researchDirection" class="form-control"
-                                           id="researchDirection"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="secretaryId">秘书编号</label>
-                                    <input type="text" name="secretaryId" class="form-control" id="secretaryId"/>
-                                </div>
-                                <div class="alert alert-info alert-dismissible" id="successFind2" role="alert"
-                                     style="display: none"></div>
-
-                                <div class="form-group">
-                                    <label for="principalId">负责人编号</label>
-                                    <input type="text" name="principalId" class="form-control" id="principalId"/>
-                                </div>
-                                <div class="alert alert-info alert-dismissible" id="successFind1" role="alert"
-                                     style="display: none"></div>
-                                <div class="form-group">
-                                    <label for="pStartTime">负责起始期</label>
-                                    <input type="text" name="pStartTime" class="form-control" id="pStartTime"/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="pTerm">负责任期</label>
-                                    <input type="text" name="pTerm" class="form-control" id="pTerm"/>
-                                </div>
-
-                                <div class="form-group" style="text-align: center;">
-                                    <div class="btn btn btn-primary" type="button" id="submitBtn">
-                                        <span class="glyphicon glyphicon-export"></span>&nbsp;&nbsp;提交
-                                    </div>
-                                </div>
-                            </form>
-                        </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">
-                            <span class="glyphicon glyphicon-remove"></span> 关闭
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--模态框2-->
-        <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog" id="myModalDialog2" style="width: 80%">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel2" style="text-align: center">详细信息</h4>
-                    </div>
-                    <div class="modal-body" id="windowContent2">
-                        <center>
-                            <table border="1" class="table table-bordered table-hover"
-                                   style="text-align: center;" id="table2">
-                            </table>
-                        </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal2">
-                            <span class="glyphicon glyphicon-remove"></span> 关闭
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </body>
+</body>
 </html>

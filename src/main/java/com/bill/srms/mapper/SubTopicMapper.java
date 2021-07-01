@@ -17,7 +17,7 @@ public interface SubTopicMapper extends Mapper<SubTopic> {
 
     @Select(" SELECT * FROM sub_topic WHERE id = #{id} ")
     SubTopic selectById(Integer id);
-    
+
     @Select(" SELECT ST.*,P.name as project_name,R.name as principal_name" +
             " FROM sub_topic ST " +
             " LEFT JOIN project P " +

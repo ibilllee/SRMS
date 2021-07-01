@@ -12,20 +12,20 @@ public class PersonService {
     @Autowired
     private PersonMapper personMapper;
 
-    public boolean add(Person person){
-        return personMapper.insertSelective(person)==1;
+    public boolean add(Person person) {
+        return personMapper.insertSelective(person) == 1;
     }
 
-    public List<Person> getAll(){
+    public List<Person> getAll() {
         return personMapper.selectAll();
     }
 
-    public boolean delete(Integer id){
-        return personMapper.deleteByPrimaryKey(id)==1;
+    public boolean delete(Integer id) {
+        return personMapper.deleteByPrimaryKey(id) == 1;
     }
 
-    public boolean update(Person person){
-        return personMapper.updateByPrimaryKeySelective(person)==1;
+    public boolean update(Person person) {
+        return personMapper.updateByPrimaryKeySelective(person) == 1;
     }
 
     public Person getById(Integer id) {
