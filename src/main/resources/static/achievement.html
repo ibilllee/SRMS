@@ -33,6 +33,46 @@
                 undisplay($("#successFind1"));
             })
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增成果？")) {
+                        $.post("achievement/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "achievement.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "achievement.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的成果信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'achievement/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "achievement.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "achievement.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "achievement.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             //获取结果列表
             $.get("achievement/getAll", function (result) {
                 var achievementList = result.data.achievementList;
@@ -58,23 +98,10 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#name").attr("value", "");
-                    $("#time").attr("value", "");
-                    $("#rankId").attr("value", "");
-                    $("#projectId").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增成果？")) {
-                            $.post("achievement/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "achievement.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "achievement.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("name").value="";
+                    document.getElementById("time").value="";
+                    document.getElementById("rankId").value="";
+                    document.getElementById("projectId").value="";
                 });
 
                 // 查询成员
@@ -124,9 +151,9 @@
                     var projectId = father.children().eq(5).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#name").attr("value", name);
-                    $("#time").attr("value", time);
-                    $("#rankId").attr("value", rankId);
+                    document.getElementById("name").value=name;
+                    document.getElementById("time").value=time;
+                    document.getElementById("rankId").value=rankId;
                     $("#projectId").attr("value", projectId);
                     if (type === "专利：发明") {
                         $("[name='invention']").attr("selected", true);
@@ -141,30 +168,6 @@
                     }
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的成果信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'achievement/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "achievement.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "achievement.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "achievement.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

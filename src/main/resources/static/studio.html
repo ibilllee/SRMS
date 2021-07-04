@@ -15,6 +15,46 @@
                 $("#header").html(data);
             });
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增工作室？")) {
+                        $.post("studio/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "studio.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "studio.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的工作室信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'studio/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "studio.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "studio.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "studio.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             // 失焦检查 -> 编辑表单中要检查的元素
             $("#principalId").blur(function () {
                 var principalId = $(this).val();
@@ -74,26 +114,12 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#name").attr("value", "");
-                    $("#researchDirection").attr("value", "");
-                    $("#principalId").attr("value", "");
-                    $("#pStartTime").attr("value", "");
-                    $("#pTerm").attr("value", "");
-                    $("#secretaryId").attr("value", "");
-
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增工作室？")) {
-                            $.post("studio/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "studio.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "studio.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("name").value="";
+                    document.getElementById("researchDirection").value="";
+                    document.getElementById("principalId").value="";
+                    document.getElementById("pStartTime").value="";
+                    document.getElementById("pTerm").value="";
+                    document.getElementById("secretaryId").value="";
                 });
 
                 // 查询成员
@@ -172,38 +198,14 @@
                     var secretaryId = father.children().eq(7).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#name").attr("value", name);
-                    $("#researchDirection").attr("value", researchDirection);
-                    $("#principalId").attr("value", principalId);
-                    $("#pStartTime").attr("value", pStartTime);
-                    $("#pTerm").attr("value", pTerm);
-                    $("#secretaryId").attr("value", secretaryId);
+                    document.getElementById("name").value=name;
+                    document.getElementById("researchDirection").value=researchDirection;
+                    document.getElementById("principalId").value=principalId;
+                    document.getElementById("pStartTime").value=pStartTime;
+                    document.getElementById("pTerm").value=pTerm;
+                    document.getElementById("secretaryId").value=secretaryId;
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的工作室信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'studio/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "studio.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "studio.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "studio.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
 

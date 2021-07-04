@@ -33,6 +33,46 @@
                 undisplay($("#successFind1"));
             })
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增项目参与信息？")) {
+                        $.post("joinProject/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "joinProject.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "joinProject.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的项目参与信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'joinProject/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "joinProject.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "joinProject.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "joinProject.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             $("#projectId").blur(function () {
                 var projectId = $(this).val();
                 $.get("project/get/" + projectId, function (result) {
@@ -75,25 +115,12 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#researcherId").attr("value", "");
-                    $("#projectId").attr("value", "");
-                    $("#subTopicId").attr("value", "");
-                    $("#joinTime").attr("value", "");
-                    $("#workload").attr("value", "");
-                    $("#fund").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增项目参与信息？")) {
-                            $.post("joinProject/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "joinProject.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "joinProject.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("researcherId").value="";
+                    document.getElementById("projectId").value="";
+                    document.getElementById("subTopicId").value="";
+                    document.getElementById("joinTime").value="";
+                    document.getElementById("workload").value="";
+                    document.getElementById("fund").value="";
                 });
 
 
@@ -111,38 +138,14 @@
                     var fund = father.children().eq(8).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#researcherId").attr("value", researcherId);
-                    $("#projectId").attr("value", projectId);
-                    $("#subTopicId").attr("value", subTopicId);
-                    $("#joinTime").attr("value", joinTime);
-                    $("#workload").attr("value", workload);
-                    $("#fund").attr("value", fund);
+                    document.getElementById("researcherId").value=researcherId;
+                    document.getElementById("projectId").value=projectId;
+                    document.getElementById("subTopicId").value=subTopicId;
+                    document.getElementById("joinTime").value=joinTime;
+                    document.getElementById("workload").value=workload;
+                    document.getElementById("fund").value=fund;
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的项目参与信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'joinProject/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "joinProject.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "joinProject.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "joinProject.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

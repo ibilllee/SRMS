@@ -33,6 +33,46 @@
                 undisplay($("#successFind1"));
             })
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增科研者贡献信息？")) {
+                        $.post("contribute/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "contribute.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "contribute.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的科研者贡献信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'contribute/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "contribute.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "contribute.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "contribute.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             $("#achievementId").blur(function () {
                 var achievementId = $(this).val();
                 $.get("achievement/get/" + achievementId, function (result) {
@@ -73,19 +113,8 @@
                     $("#id").attr("placeholder", "自动生成");
                     $("#researcherId").attr("value", "");
                     $("#achievementId").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增科研者贡献信息？")) {
-                            $.post("contribute/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "contribute.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "contribute.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("researcherId").value="";
+                    document.getElementById("achievementId").value="";
                 });
 
 
@@ -99,34 +128,9 @@
                     var achievementId = father.children().eq(3).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#researcherId").attr("value", researcherId);
-                    $("#achievementId").attr("value", achievementId);
-
+                    document.getElementById("researcherId").value=researcherId;
+                    document.getElementById("achievementId").value=achievementId;
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的科研者贡献信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'contribute/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "contribute.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "contribute.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "contribute.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

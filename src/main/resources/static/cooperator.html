@@ -14,6 +14,45 @@
                 $("#header").html(data);
             });
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增第三方机构信息？")) {
+                        $.post("cooperator/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "cooperator.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "cooperator.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的第三方机构信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'cooperator/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "cooperator.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "cooperator.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "cooperator.html";
+                            }
+                        })
+                    }
+                }
+            });
 
             //获取结果列表
             $.get("cooperator/getAll", function (result) {
@@ -34,21 +73,8 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#name").attr("value", "");
-                    $("#address").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增第三方机构信息？")) {
-                            $.post("cooperator/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "cooperator.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "cooperator.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("name").value="";
+                    document.getElementById("address").value="";
                 });
 
                 // //修改
@@ -60,34 +86,9 @@
                     var name = father.children().eq(1).html();
                     var address = father.children().eq(2).html();
                     $("#id").attr("placeholder", id);
-                    $("#name").attr("value", name);
-                    $("#address").attr("value", address);
-
+                    document.getElementById("name").value=name;
+                    document.getElementById("address").value=address;
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的第三方机构信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'cooperator/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "cooperator.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "cooperator.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "cooperator.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

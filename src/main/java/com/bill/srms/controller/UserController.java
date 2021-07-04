@@ -30,9 +30,6 @@ public class UserController {
         System.out.println(System.getProperty("user.dir"));
         if (userService.login(user)) {
             session.setAttribute(WebSecurityConfig.SESSION_KEY, user);
-            response.setHeader("Cache-Control", "no-cache,no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setDateHeader("Expires", -1);
             return RespBean.ok("登陆成功");
         }
         return RespBean.unprocessable("登录失败，用户名或密码错误");

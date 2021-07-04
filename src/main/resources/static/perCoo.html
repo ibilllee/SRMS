@@ -49,6 +49,46 @@
                 undisplay($("#successFind1"));
             })
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增机构-联系人信息？")) {
+                        $.post("perCoo/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "perCoo.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "perCoo.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的机构-联系人信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'perCoo/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "perCoo.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "perCoo.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "perCoo.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             //获取结果列表
             $.get("perCoo/getAll", function (result) {
                 var perCooList = result.data.perCooList;
@@ -72,21 +112,8 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#cooperatorId").attr("value", "");
-                    $("#personId").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增机构-联系人信息？")) {
-                            $.post("perCoo/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "perCoo.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "perCoo.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("cooperatorId").value="";
+                    document.getElementById("personId").value="";
                 });
 
 
@@ -101,7 +128,7 @@
                     var type = father.children().eq(4).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#cooperatorId").attr("value", cooperatorId);
+                    document.getElementById("cooperatorId").value=cooperatorId;
                     $("#personId").attr("value", personId);
                     if (type === "联系人") {
                         $("[name='联系人']").attr("selected", true);
@@ -111,30 +138,6 @@
 
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的机构-联系人信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'perCoo/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "perCoo.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "perCoo.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "perCoo.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

@@ -14,6 +14,45 @@
                 $("#header").html(data);
             });
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增第三方联系人信息？")) {
+                        $.post("person/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "person.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "person.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的第三方联系人信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'person/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "person.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "person.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "person.html";
+                            }
+                        })
+                    }
+                }
+            });
 
             //获取结果列表
             $.get("person/getAll", function (result) {
@@ -36,23 +75,11 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#name").attr("value", "");
-                    $("#mail").attr("value", "");
-                    $("#officePhone").attr("value", "");
-                    $("#mobilePhone").attr("value", "");
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增第三方联系人信息？")) {
-                            $.post("person/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "person.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "person.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("name").value="";
+                    document.getElementById("mail").value="";
+                    document.getElementById("officePhone").value="";
+                    document.getElementById("mobilePhone").value="";
+
                 });
 
                 // //修改
@@ -66,36 +93,12 @@
                     var officePhone = father.children().eq(3).html();
                     var mobilePhone = father.children().eq(4).html();
                     $("#id").attr("placeholder", id);
-                    $("#name").attr("value", name);
-                    $("#mail").attr("value", mail);
-                    $("#officePhone").attr("value", officePhone);
-                    $("#mobilePhone").attr("value", mobilePhone);
+                    document.getElementById("name").value=name;
+                    document.getElementById("mail").value=mail;
+                    document.getElementById("officePhone").value=officePhone;
+                    document.getElementById("mobilePhone").value=mobilePhone;
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的第三方联系人信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'person/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "person.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "person.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "person.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
                 //删除

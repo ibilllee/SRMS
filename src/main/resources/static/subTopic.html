@@ -15,6 +15,46 @@
                 $("#header").html(data);
             });
 
+            $("#submitBtn").click(function () {
+                if ($("#id").attr("placeholder") === '自动生成') {
+                    if (confirm("新增子课题？")) {
+                        $.post("subTopic/add", $("#changeForm").serialize(), function (result) {
+                            if (result.metaInfo.status === 200) {
+                                alert("添加成功");
+                                location.href = "subTopic.html";
+                            } else {
+                                alert("添加失败\n信息：" + result.metaInfo.msg);
+                                location.href = "subTopic.html";
+                            }
+                        });
+                    }
+                }else {
+                    var id=$("#id").attr("placeholder");
+                    if (confirm("修改编号为" + id + "的子课题信息？")) {
+                        $("#id").removeAttr("disabled");
+                        $("#id").attr("value", id);
+                        $.ajax({
+                            type: 'PUT',
+                            url: 'subTopic/update',
+                            data: $("#changeForm").serialize(),
+                            success: function (result) {
+                                if (result.metaInfo.status === 200) {
+                                    alert("修改成功");
+                                    location.href = "subTopic.html";
+                                } else {
+                                    alert("修改失败\n信息：" + result.metaInfo.msg);
+                                    location.href = "subTopic.html";
+                                }
+                            },
+                            error: function (result) {
+                                alert("修改失败");
+                                location.href = "subTopic.html";
+                            }
+                        })
+                    }
+                }
+            });
+
             // 失焦检查 -> 编辑表单中要检查的元素
             $("#principalId").blur(function () {
                 var principalId = $(this).val();
@@ -73,25 +113,11 @@
                 $("#addBtn").click(function () {
                     $("#myModal").modal("show");
                     $("#id").attr("placeholder", "自动生成");
-                    $("#finishTime").attr("value", "");
-                    $("#fund").attr("value", "");
-                    $("#techIndex").attr("value", "");
-                    $("#principalId").attr("value", "");
-                    $("#projectId").attr("value", "");
-
-                    $("#submitBtn").click(function () {
-                        if (confirm("新增子课题？")) {
-                            $.post("subTopic/add", $("#changeForm").serialize(), function (result) {
-                                if (result.metaInfo.status === 200) {
-                                    alert("添加成功");
-                                    location.href = "subTopic.html";
-                                } else {
-                                    alert("添加失败\n信息：" + result.metaInfo.msg);
-                                    location.href = "subTopic.html";
-                                }
-                            });
-                        }
-                    });
+                    document.getElementById("finishTime").value="";
+                    document.getElementById("fund").value="";
+                    document.getElementById("techIndex").value="";
+                    document.getElementById("principalId").value="";
+                    document.getElementById("projectId").value="";
                 });
 
                 // 查询成员
@@ -142,37 +168,13 @@
                     var projectId = father.children().eq(6).html();
 
                     $("#id").attr("placeholder", id);
-                    $("#finishTime").attr("value", finishTime);
-                    $("#fund").attr("value", fund);
-                    $("#techIndex").attr("value", techIndex);
-                    $("#principalId").attr("value", principalId);
-                    $("#projectId").attr("value", projectId);
+                    document.getElementById("finishTime").value=finishTime;
+                    document.getElementById("fund").value=fund;
+                    document.getElementById("techIndex").value=techIndex;
+                    document.getElementById("principalId").value=principalId;
+                    document.getElementById("projectId").value=projectId;
 
                     $("#myModal").modal("show");
-                    $("#submitBtn").click(function () {
-                        if (confirm("修改编号为" + id + "的子课题信息？")) {
-                            $("#id").removeAttr("disabled");
-                            $("#id").attr("value", id);
-                            $.ajax({
-                                type: 'PUT',
-                                url: 'subTopic/update',
-                                data: $("#changeForm").serialize(),
-                                success: function (result) {
-                                    if (result.metaInfo.status === 200) {
-                                        alert("修改成功");
-                                        location.href = "subTopic.html";
-                                    } else {
-                                        alert("修改失败\n信息：" + result.metaInfo.msg);
-                                        location.href = "subTopic.html";
-                                    }
-                                },
-                                error: function (result) {
-                                    alert("修改失败");
-                                    location.href = "subTopic.html";
-                                }
-                            })
-                        }
-                    });
                 });
 
 
