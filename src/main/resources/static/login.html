@@ -20,7 +20,33 @@
                         err_msg_block.html(data.metaInfo.msg);
                     }
                 });
-            })
+            });
+
+            //验证码回车提交
+            //解决Firefox下回车穿透
+            var name = "";
+            $("#password").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    if ($(this).val() == name) {
+                        $("#login_btn").click();
+                    }
+                }
+            }).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    name = $(this).val();
+                }
+            });
+            $("#username").keyup(function (event) {
+                if (event.keyCode == 13) {
+                    if ($(this).val() == name) {
+                        $("#login_btn").click();
+                    }
+                }
+            }).keydown(function (event) {
+                if (event.keyCode == 13) {
+                    name = $(this).val();
+                }
+            });
 
             var name = "";
             $("#password").keyup(function (event) {

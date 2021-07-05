@@ -56,7 +56,7 @@
 
         function checkEmpPassword() {
             var password_obj = $("#password");
-            var reg_password = /^\w{6,20}$/;
+            var reg_password = /^[\S]{6,20}$/;
             var flag = reg_password.test(password_obj.val());
             if (!flag) {
                 password_obj.css("border-color", "red");
